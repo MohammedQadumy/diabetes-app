@@ -1,6 +1,7 @@
 
 
 import 'package:diabetes_app/AppPage/mainPage.dart';
+import 'package:diabetes_app/components/app_return_icon_button.dart';
 import 'package:diabetes_app/components/my_textfield.dart';
 import 'package:diabetes_app/questionare/StepperWidget.dart';
 import 'package:flutter/cupertino.dart';
@@ -55,6 +56,7 @@ class SignInWidget extends StatefulWidget{
           crossAxisAlignment: CrossAxisAlignment.center,
 
           children: [
+            const AppReturnIconButton(),
             const SizedBox(height: 20,),
             const Text("Welcome back"),
             const SizedBox(height: 20,),
@@ -90,17 +92,6 @@ class SignInWidget extends StatefulWidget{
                 style: OutlinedButton.styleFrom(
                   backgroundColor: Colors.black,
                 ), child: const Text("sign in", style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15,
-                ))),
-            OutlinedButton(onPressed: () {
-              Navigator.pop(context);
-            }
-                ,
-                style: OutlinedButton.styleFrom(
-                  backgroundColor: Colors.black,
-                ), child: const Text("back", style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                   fontSize: 15,

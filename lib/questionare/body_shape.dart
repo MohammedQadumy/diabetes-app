@@ -5,6 +5,8 @@ import 'package:diabetes_app/questionare/height_widget.dart';
 import 'package:diabetes_app/questionare/weight_widget.dart';
 import 'package:flutter/cupertino.dart';
 
+import 'date_picker.dart';
+
 class BodyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -13,7 +15,7 @@ class BodyWidget extends StatelessWidget {
         const WeightWidget(),
         const HeightWidget(),
         GenderWidget(),
-        const Text("add date picker widget here "),
+        AppDatePicker(),
       ],
     );
   }

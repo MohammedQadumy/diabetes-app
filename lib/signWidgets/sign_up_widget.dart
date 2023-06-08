@@ -1,38 +1,39 @@
 
 
-import 'package:diabetes_app/components/my_textfield.dart';
-import 'package:diabetes_app/questionare/Questionare.dart';
-import 'package:diabetes_app/questionare/StepperWidget.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:diabetes_app/Models/User.dart';
 import 'package:flutter/material.dart';
+
+import '../components/my_textfield.dart';
 
 class SignUpWidget extends StatefulWidget {
 
-  const SignUpWidget({super.key});
+  const SignUpWidget({Key? key,  required this.onSubmit}) : super(key: key);
+  final Function(User) onSubmit;
 
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-      return _SignUpState();
+      return SignUpState();
   }
 
 }
 
-  class _SignUpState extends State<SignUpWidget>{
+  class SignUpState extends State<SignUpWidget>{
+
 
 
     final firstNameController = TextEditingController();
     final lastNameController = TextEditingController();
+    final userNameController = TextEditingController();
     final emailController = TextEditingController();
     final passwordController = TextEditingController();
     final rePasswordController = TextEditingController();
 
-
-  //   void sendData() {
-  //     setState(() {
-  //
-  //     });
-  // }
+    String firstName='';
+    String lastname='';
+    String username='';
+    String email='';
+    String password='';
 
     @override
     Widget build(BuildContext context) {
@@ -44,19 +45,25 @@ class SignUpWidget extends StatefulWidget {
             const SizedBox(height: 5,),
             MyTextField(controller: lastNameController , hintText: "last Name",),
             const SizedBox(height: 5,),
+            MyTextField(controller: userNameController, hintText: "username",),
+            const SizedBox(height: 5,),
             MyTextField(controller: emailController , hintText: "Email",),
             const SizedBox(height: 5,),
             MyTextField(controller: passwordController , hintText: "password",),
             const SizedBox(height: 5,),
             MyTextField(controller: rePasswordController , hintText: "repassword",),
             const SizedBox(height: 5,),
+             ElevatedButton(onPressed: (){
+              firstName = firstNameController.text;
+              lastname = lastNameController.text;
+              email = emailController.text;
+              password = passwordController.text;
+              username = userNameController.text;
+              widget.onSubmit(User(firstName: firstName, lastName: lastname, userName: username, password: password, email: email));
+            },
+              child: const Text("submit")
+            )
 
-            // Expanded(child: Row(
-            //   children: const [
-            //     Checkbox(value: false, onChanged: null),
-            //     Text("agree to terms")
-            //   ],
-            // )),
 
           ],
         );
