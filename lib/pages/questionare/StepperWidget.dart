@@ -2,12 +2,9 @@
 
 import 'package:diabetes_app/Models/User.dart';
 import 'package:diabetes_app/questionare/body_shape.dart';
-import 'package:diabetes_app/questionare/favorite_food_widget.dart';
-import 'package:diabetes_app/questionare/height_widget.dart';
-import 'package:diabetes_app/questionare/weight_widget.dart';
 import 'package:diabetes_app/signWidgets/sign_up_widget.dart';
+import 'package:diabetes_app/utils/app_constants.dart';
 import 'package:diabetes_app/utils/dimenstions.dart';
-import 'package:diabetes_app/utils/questions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -52,16 +49,43 @@ class _StepperWidgetState extends State<StepperWidget> {
   }
 
 
-  void onAnswered(String answer){
+  void onAnswered(String question, String answer){
     userAnsweres.add(answer);
+    _questionAndAnswer(question, answer);
     // print(userAnsweres);
-    if(userAnsweres.length == questions.length){
+    if(userAnsweres.length == AppConstants.questions.length){
       setState(() {
         userAnsweres = [];
         _index++;
       });
     }
   }
+
+
+  Future<String> _questionAndAnswer(String question , String answer) async {
+    final response = await http.post(
+      Uri.parse('http://13.51.162.14:8000/api/question/'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        // 'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode(<String, String>{
+        'questions': question,
+        'answer': answer
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      // If the server returns a 200 OK response,
+      // then parse the JSON.
+      return "Question sent";
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('question failed to send');
+    }
+  }
+
 
 
   Future<String> _signUp(User addedUser) async {

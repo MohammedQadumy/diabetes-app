@@ -2,6 +2,7 @@
 import 'dart:ffi';
 
 import 'package:diabetes_app/components/app_icon.dart';
+import 'package:diabetes_app/utils/colors.dart';
 import 'package:diabetes_app/utils/dimenstions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,7 @@ class _MainPageState extends State<MainPage>{
     print(MediaQuery.of(context).size.height.toString());
 
     return Scaffold(
+      backgroundColor: AppColors.background,
       body: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -43,17 +45,22 @@ class _MainPageState extends State<MainPage>{
                 ],
 
                 ),
-                Center(
-                  child: Container(
-                    width: Dimensions.height45,
-                    height: Dimensions.height45,
-                    child: Icon(Icons.add,color: Colors.black,size: Dimensions.iconSize24),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(Dimensions.radius15),
-                      color: Colors.red,
-                    ),
+                InkWell(
+                  child: Center(
+                    child: Container(
+                      width: Dimensions.height45,
+                      height: Dimensions.height45,
+                      child: Icon(Icons.add,color: Colors.black,size: Dimensions.iconSize24),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(Dimensions.radius15),
+                        color: AppColors.secondaryContainer,
+                      ),
 
+                    ),
                   ),
+                  onTap: () {
+
+                  },
                 )
               ],
             ),
@@ -62,22 +69,22 @@ class _MainPageState extends State<MainPage>{
             FoodPageBody(),
         ],
       ),
-      // bottomNavigationBar: Container(
-      //   height: Dimensions.height45,
-      //   decoration: BoxDecoration(
-      //     color: Colors.black45
-      //   ),
-      //   child: Row(
-      //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      //     children: [
-      //       InkWell(child: AppIcon(icon: Icons.home),
-      //       onTap: () {
-      //       },),
-      //       AppIcon(icon: Icons.food_bank_rounded),
-      //       AppIcon(icon: Icons.person),
-      //     ],
-      //   ),
-      // ),
+      bottomNavigationBar: Container(
+        height: Dimensions.height45,
+        decoration: BoxDecoration(
+          color: AppColors.secondaryContainer
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            InkWell(child: AppIcon(icon: Icons.home),
+            onTap: () {
+            },),
+            AppIcon(icon: Icons.food_bank_rounded),
+            AppIcon(icon: Icons.person),
+          ],
+        ),
+      ),
     );
   }
 

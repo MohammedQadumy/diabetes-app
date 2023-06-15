@@ -30,8 +30,13 @@ class TopRatedFoodDetails extends StatelessWidget {
                 ),
           )
           ),
-          //icons columm
-          const AppReturnIconButton(),
+          Positioned(
+              left: Dimensions.height10,
+              right: 0,
+              top: Dimensions.height30,
+              child: Container(child: AppReturnIconButton(),
+              )
+          ),
           // description
           Positioned(
               left: 0,
@@ -51,7 +56,7 @@ class TopRatedFoodDetails extends StatelessWidget {
                     SizedBox(height: Dimensions.height20,),
                     Text("Description"),
                     SizedBox(height: Dimensions.height20,),
-                    Expanded(
+                    const Expanded(
                       child: SingleChildScrollView(
                         child: ExpandableTextWidget(text: "This peri peri chicken is made with my take on African peri peri sauce using fresh and dried chiles."
                             " The marinade is incredibly flavorful and gives the chicken a beautiful color as well." +""

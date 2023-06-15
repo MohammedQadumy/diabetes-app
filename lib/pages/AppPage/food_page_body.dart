@@ -3,6 +3,7 @@
 import 'package:diabetes_app/AppPage/favorite_list.dart';
 import 'package:diabetes_app/AppPage/top_rated_food_details.dart';
 import 'package:diabetes_app/components/icon_and_text_widget.dart';
+import 'package:diabetes_app/utils/colors.dart';
 import 'package:diabetes_app/utils/dimenstions.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/cupertino.dart';
@@ -37,10 +38,6 @@ class _FoodPageBodyState extends State<FoodPageBody> {
     });
   }
 
-  @override
-  void dispose(){
-    pageController.dispose();
-  }
 
 
   @override
@@ -63,7 +60,6 @@ class _FoodPageBodyState extends State<FoodPageBody> {
         ),
      DotsIndicator(
     dotsCount: 5,
-
     position: _currentPage.toInt(),
     decorator: DotsDecorator(
     size: const Size.square(9.0),
@@ -146,7 +142,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
               margin: EdgeInsets.only(left: Dimensions.height30,right: Dimensions.height30 , bottom: Dimensions.height25 ),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(Dimensions.radius30),
-                color:  const Color(0xfffffffff),
+                color:  AppColors.secondaryContainer,
                 boxShadow: const [
                   BoxShadow(color: Color(0xFFe8e8e8),
                     blurRadius: 5,

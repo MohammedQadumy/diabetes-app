@@ -1,13 +1,13 @@
 
 import 'package:diabetes_app/components/app_elevated_button.dart';
-import 'package:diabetes_app/utils/questions.dart';
+import 'package:diabetes_app/utils/app_constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class FoodPrefrencesWidget extends StatefulWidget {
   const FoodPrefrencesWidget({Key? key , required this.onAnswered}) : super(key: key);
 
-  final void Function(String) onAnswered;
+  final void Function(String,String) onAnswered;
 
   @override
   State<FoodPrefrencesWidget> createState() => _FoodPrefrencesWidgetState();
@@ -25,11 +25,10 @@ class _FoodPrefrencesWidgetState extends State<FoodPrefrencesWidget> {
   }
 
 
-  void answerQuestion(String answer){
-    widget.onAnswered(answer);
+  void answerQuestion(String question,String answer){
+    widget.onAnswered(question,answer);
       setState(() {
-        _index<questions.length-1?_index++:_index=0;
-
+        _index<AppConstants.questions.length-1?_index++:_index=0;
       });
 
   }
@@ -38,15 +37,15 @@ class _FoodPrefrencesWidgetState extends State<FoodPrefrencesWidget> {
   @override
   Widget build(BuildContext context) {
 
-    final currentQuestion = questions[_index];
+    final currentQuestion = AppConstants.questions[_index];
 
     return Column(
       children: [
         Text(currentQuestion.text),
         ...currentQuestion.answers.map((answer){
             return AppElevateButton(text:answer , onTap:(){
-               answerQuestion(answer);
-               // print(answer+_index.toString());
+               answerQuestion(currentQuestion.text,answer);
+               print(answer+_index.toString());
             }
             );
         }),
