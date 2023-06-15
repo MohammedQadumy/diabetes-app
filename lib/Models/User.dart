@@ -16,6 +16,18 @@ class User{
       });
 
 
+  Map<String,dynamic> toJson(){
+    final Map<String,dynamic> data = new Map<String,dynamic>();
+
+    data["first_name"] = firstName;
+    data["last_name"] = lastName;
+    data["username"] = userName;
+    data["email"] = email;
+    data["password"] = password;
+
+
+    return data;
+  }
 
 
 

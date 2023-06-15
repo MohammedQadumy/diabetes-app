@@ -1,4 +1,5 @@
 import 'package:diabetes_app/pages/signWidgets/welcomePage.dart';
+import 'package:diabetes_app/pages/stats/stats_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 
@@ -22,7 +23,7 @@ class MyApp extends StatefulWidget{
 class _MyAppState extends State<MyApp>{
   @override
   Widget build(BuildContext context) {
-    // welcomeWidget(), MainPage()
+    // welcomeWidget(), MainPage() ,StatsPage()
     //MainPage()
     return const GetMaterialApp(
       home: Scaffold(

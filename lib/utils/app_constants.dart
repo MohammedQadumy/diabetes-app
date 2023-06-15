@@ -5,6 +5,7 @@ import '../Models/questions.dart';
 class AppConstants {
   static const String APP_NAME = "DIABEAT";
   static const String BASE_URL = "http://13.51.162.14:8000";
+  static const String REGISTRATION_URI = "/api/register/";
   static const TOP_RATED_MEALS_URI = " ";
 
   static const String TOKEN = "DBtoken";

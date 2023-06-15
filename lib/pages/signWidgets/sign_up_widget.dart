@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:diabetes_app/Models/User.dart';
+import 'package:diabetes_app/controllers/auth_controller.dart';
 import 'package:diabetes_app/utils/dimenstions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -69,6 +70,9 @@ class SignUpWidget extends StatefulWidget {
 
 
     void _registration(){
+
+      var authController = Get.find<AuthController>();
+
       String firstName = firstNameController.text.trim();
       String lastname = lastNameController.text.trim();
       String username = userNameController.text.trim();
@@ -89,21 +93,32 @@ class SignUpWidget extends StatefulWidget {
         showCustomSnackBar("type your password",title: "Name");
       }
       else{
-              User newUser = User(firstName:firstNameController.text,
-              lastName: lastNameController.text,
-              userName: userNameController.text,
-              password: passwordController.text,
-              email: emailController.text);
+              User newUser = User(firstName:firstName,
+              lastName: lastname,
+              userName: username,
+              password: email,
+              email: password
+              );
 
-              () async {
-                try {
-                  await _signUp(newUser);
-                  print('signed up');
-                } catch (e) {
-                  showCustomSnackBar("User is already exists",title: "Name");
-                  return Text("test");
+              authController.registration(newUser).then((status){
+                if(status.isSuccess){
+                  print("Success registration");
+                }else{
+                  print("failed");
+                  showCustomSnackBar(status.message);
+                  print(status.message);
                 }
-              }();
+              });
+
+              // () async {
+              //   try {
+              //     await _signUp(newUser);
+              //     print('signed up');
+              //   } catch (e) {
+              //     showCustomSnackBar("User is already exists",title: "Name");
+              //     return Text("test");
+              //   }
+              // }();
 
       }
     }
@@ -119,7 +134,6 @@ class SignUpWidget extends StatefulWidget {
             ),
               height: Dimensions.iconImageWidthAndHeight,
               width: Dimensions.iconImageWidthAndHeight,
-
             ),
 
             AppTextField(controller: firstNameController,hintText: "First Name", icon: Icons.person, obscureText: false,),
