@@ -12,6 +12,7 @@ class Dimensions {
   static double pageViewContainer = screenHeight/3.676;
   static double pageViewTextContainer = screenHeight/6.667;
 
+  static double height5 = screenHeight/163.3;
   static double height10 = screenHeight/82;
   static double height15 = screenHeight/54.66;
   static double height20 = screenHeight/41;
@@ -27,6 +28,10 @@ class Dimensions {
   //
 static double iconSize24 = screenHeight/34.12;
 static double iconSize16 = screenHeight/51.25;
+static double iconSize30 = screenHeight/27.2;
+
+static double iconImageWidthAndHeight = screenHeight/3.55;
+
 static double detailsImageHeight = screenHeight/2.34;
 
 }

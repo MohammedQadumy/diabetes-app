@@ -1,9 +1,8 @@
 
 
-import 'package:diabetes_app/signWidgets/signInWidget.dart';
+import 'package:diabetes_app/pages/signWidgets/signInWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:diabetes_app/signWidgets/sign_up_widget.dart';
 
 import '../questionare/StepperWidget.dart';
 class welcomeWidget extends StatelessWidget{

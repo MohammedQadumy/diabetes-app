@@ -47,14 +47,3 @@ class _AppDatePickerState extends State<AppDatePicker> {
   }
 }
 
-//
-// InkWell(
-// child: Container(
-// child: Row(
-// children: [
-//
-// Icon(Icons.calendar_month_outlined),
-// ],
-// ),
-// ),
-// );

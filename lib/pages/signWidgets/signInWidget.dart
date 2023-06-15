@@ -1,16 +1,13 @@
 
-
-import 'package:diabetes_app/AppPage/mainPage.dart';
-import 'package:diabetes_app/components/app_button.dart';
-import 'package:diabetes_app/components/app_return_icon_button.dart';
-import 'package:diabetes_app/components/my_textfield.dart';
-import 'package:diabetes_app/questionare/StepperWidget.dart';
 import 'package:diabetes_app/utils/colors.dart';
 import 'package:diabetes_app/utils/dimenstions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import '../../components/app_textfield.dart';
+import '../AppPage/mainPage.dart';
 
 
 class SignInWidget extends StatefulWidget{
@@ -68,19 +65,23 @@ class SignInWidget extends StatefulWidget{
             children: [
               Image(image: AssetImage("assets/images/logo.png")),
               const Text("Welcome back"),
-              const SizedBox(height: 20,),
-              MyTextField(
-                  controller: _userNameController, hintText: "Enter UserName",),
-              SizedBox(height: 20,),
-              MyTextField(
-                controller: _passwordController, hintText: "Enter Password",),
+               SizedBox(height: Dimensions.height20,),
+              AppTextField(
+                  controller: _userNameController, hintText: "Enter UserName", icon: Icons.person, obscureText: false,),
+              SizedBox(height: Dimensions.height20,),
+              AppTextField(
+                controller: _passwordController, hintText: "Enter Password", icon: Icons.password, obscureText: true,),
               Padding(
                 padding:  EdgeInsets.symmetric(horizontal: Dimensions.height20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: const [
-                    Text("Already have an account?"),
-                    TextButton(onPressed: null, child: Text("SignUp"))
+                    Text("Don't have an account?"),
+                    TextButton(onPressed: null, child: Text("Create" ,style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                    )
+                    )
                   ],
                 ),
               ),

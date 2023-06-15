@@ -5,8 +5,8 @@ import 'package:diabetes_app/components/extendable_text_widget.dart';
 import 'package:diabetes_app/utils/dimenstions.dart';
 import 'package:flutter/material.dart';
 
-import '../components/app_column.dart';
-import '../components/icon_and_text_widget.dart';
+import '../../components/app_column.dart';
+
 
 class TopRatedFoodDetails extends StatelessWidget {
   const TopRatedFoodDetails({Key? key}) : super(key: key);

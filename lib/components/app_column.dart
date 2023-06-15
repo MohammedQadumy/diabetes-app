@@ -3,6 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../utils/colors.dart';
 import '../utils/dimenstions.dart';
 import 'icon_and_text_widget.dart';
 
@@ -15,11 +16,14 @@ class AppColumn extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(text),
+        Text(text ,style: TextStyle(
+          color: AppColors.background
+        ),
+        ),
         SizedBox(height: Dimensions.height10,),
         Row(children: [
           // wrap widget used to draw things multiple times
-          Wrap(children: List.generate(5, (index) => const Icon(Icons.star , color: Colors.red,)),),
+          Wrap(children: List.generate(5, (index) => const Icon(Icons.star , color: AppColors.onSecondary,)),),
           SizedBox(width: Dimensions.height10,),
           const Text("rating : 3")
           // can add clickable text here

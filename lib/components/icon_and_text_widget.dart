@@ -1,3 +1,6 @@
+import 'package:diabetes_app/components/app_icon.dart';
+import 'package:diabetes_app/utils/colors.dart';
+import 'package:diabetes_app/utils/dimenstions.dart';
 import 'package:flutter/cupertino.dart';
 
 class MyIconTextWidget extends StatelessWidget {
@@ -17,9 +20,11 @@ class MyIconTextWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return  Row(
       children: [
-        Icon(icon,color: iconColor,),
+        AppIcon(icon: this.icon,size: Dimensions.iconSize30,backgroundColor: AppColors.secondaryContainer,iconColor: this.iconColor,),
         SizedBox(width: 5,),
-        Text(text)
+        Text(text , style: TextStyle(
+          color: this.color
+        ),)
       ],
     );
   }

@@ -11,7 +11,9 @@ class MyBigText extends StatelessWidget
   TextOverflow overflow;
 
   // pass color
-  MyBigText({Key? key , this.color   , required this.text , this.size = 20 , this.overflow = TextOverflow.ellipsis}) : super(key: key);
+  MyBigText({Key? key , this.color   , required this.text ,
+    this.size = 20 ,
+    this.overflow = TextOverflow.ellipsis}) : super(key: key);
 
 
 

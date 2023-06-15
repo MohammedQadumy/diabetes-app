@@ -1,15 +1,13 @@
 
 
-import 'package:diabetes_app/AppPage/favorite_list.dart';
-import 'package:diabetes_app/AppPage/top_rated_food_details.dart';
-import 'package:diabetes_app/components/icon_and_text_widget.dart';
+import 'package:diabetes_app/pages/AppPage/top_rated_food_details.dart';
 import 'package:diabetes_app/utils/colors.dart';
 import 'package:diabetes_app/utils/dimenstions.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../components/app_column.dart';
+import '../../components/app_column.dart';
 
 class FoodPageBody extends StatefulWidget {
   const FoodPageBody({Key? key}) : super(key: key);

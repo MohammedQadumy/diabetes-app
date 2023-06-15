@@ -1,18 +1,19 @@
 
+import 'package:diabetes_app/utils/colors.dart';
 import 'package:diabetes_app/utils/dimenstions.dart';
 import 'package:flutter/cupertino.dart';
 
 class AppIcon extends StatelessWidget {
-  
-  final IconData icon ; 
+
+  final IconData icon ;
   final Color backgroundColor;
   final Color iconColor ;
   final double size ;
-  
-  
+
+
    AppIcon({Key? key,required this.icon ,
-     this.backgroundColor = const Color(0xFFfcf4e4),
-     this.iconColor = const Color(0xFF756d54),
+     this.backgroundColor = AppColors.onSecondaryContainer,
+     this.iconColor = AppColors.onSecondary,
      this.size=40}
        ) : super(key: key);
 
