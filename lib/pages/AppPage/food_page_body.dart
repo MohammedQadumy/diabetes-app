@@ -1,11 +1,16 @@
 
 
+import 'package:diabetes_app/components/app_big_text.dart';
+import 'package:diabetes_app/controllers/auth_controller.dart';
 import 'package:diabetes_app/pages/AppPage/top_rated_food_details.dart';
+import 'package:diabetes_app/pages/signWidgets/signInWidget.dart';
 import 'package:diabetes_app/utils/colors.dart';
 import 'package:diabetes_app/utils/dimenstions.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'package:get/get.dart';
 
 import '../../components/app_column.dart';
 
@@ -42,6 +47,14 @@ class _FoodPageBodyState extends State<FoodPageBody> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(width: Dimensions.height20,),
+            AppBigText(text: "Top Rated Meals" ),
+            SizedBox(height: Dimensions.height10,)
+          ],
+        ),
         InkWell(
           child: Container(
             height: Dimensions.pageViewContainer+Dimensions.pageViewTextContainer,
@@ -70,8 +83,9 @@ class _FoodPageBodyState extends State<FoodPageBody> {
           margin: EdgeInsets.only(left: Dimensions.height30),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("Favorite food"),
+              AppBigText(text: "Meals Today"),
               SizedBox(width: Dimensions.height10,),
               Container(
                 margin: EdgeInsets.only(bottom: 2),
@@ -81,10 +95,60 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                 ),
               ),
               SizedBox(width: Dimensions.height10,),
+              AppBigText(text: "Customize"),
+              SizedBox(width: Dimensions.height10,)
             ],
           ),
         ),
-        // MealsFavList(),
+    Container(
+      height: 900,
+            child: ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: 5,itemBuilder: (context,index){
+              return Container(
+                margin: EdgeInsets.only(left: Dimensions.height10, right: Dimensions.height10,),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 150,
+                      width: 150,
+                     margin:EdgeInsets.all(Dimensions.height10)
+                    ,decoration:  BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/test.jpg"
+                    ),
+                    fit: BoxFit.cover)
+                    ,borderRadius: BorderRadius.circular(Dimensions.radius10),
+                    ),  
+                    ),
+                    Expanded(
+                      child: Container(
+                        height: 120,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(Dimensions.radius10),
+                            bottomRight: Radius.circular(Dimensions.radius10)
+                          ),
+                          color: Colors.red
+                        ),
+                      child: Padding(padding: EdgeInsets.only(left: Dimensions.height10,top: Dimensions.height10),
+                        child: AppColumn(text: "Testtttttttttttttttttttttttttttttttttttttttt"),
+                      ),
+                      ),
+                    )
+                  ],
+                ),
+              );
+            }),
+          ),
+
+        // GestureDetector(
+        //   onTap: (){
+        //     // here you may add a check for user logining in
+        //     Get.find<AuthController>().clearSharedData();
+        //     Navigator.push(context, MaterialPageRoute(builder: (context)=>  SignInWidget()),);
+        //   },
+        //   child: Text("logout") ,
+        // ),
       ],
     );
   }
@@ -123,7 +187,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
         children: [
         Container(
         height: Dimensions.pageViewContainer,
-        margin: EdgeInsets.only(left: 10,right: 10),
+        margin: EdgeInsets.only(left: Dimensions.height10,right: Dimensions.height10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
           image: const DecorationImage(image: AssetImage(

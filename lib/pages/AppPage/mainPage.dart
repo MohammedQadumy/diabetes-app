@@ -1,6 +1,7 @@
 
 import 'dart:ffi';
 
+import 'package:diabetes_app/components/app_big_text.dart';
 import 'package:diabetes_app/components/app_icon.dart';
 import 'package:diabetes_app/utils/colors.dart';
 import 'package:diabetes_app/utils/dimenstions.dart';
@@ -40,8 +41,8 @@ class _MainPageState extends State<MainPage>{
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(children: [
-                  Text("Name"),
-                  Text("bbbb ")
+                  AppBigText(text: "Name"),
+                  AppBigText(text: "bbbb ")
                 ],
 
                 ),
@@ -66,7 +67,7 @@ class _MainPageState extends State<MainPage>{
             ),
           ),
           //
-            FoodPageBody(),
+            Expanded(child: SingleChildScrollView(child: FoodPageBody())),
         ],
       ),
       bottomNavigationBar: Container(

@@ -1,3 +1,4 @@
+import 'package:diabetes_app/pages/signWidgets/signInWidget.dart';
 import 'package:diabetes_app/pages/signWidgets/welcomePage.dart';
 import 'package:diabetes_app/pages/stats/stats_page.dart';
 import 'package:flutter/material.dart';
@@ -26,8 +27,9 @@ class _MyAppState extends State<MyApp>{
     // welcomeWidget(), MainPage() ,StatsPage()
     //MainPage()
     return const GetMaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: welcomeWidget(),
+        body:  SignInWidget(),
       ),
     );
   }

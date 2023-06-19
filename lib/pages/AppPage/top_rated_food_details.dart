@@ -1,4 +1,6 @@
 
+import 'package:diabetes_app/components/app_big_text.dart';
+import 'package:diabetes_app/components/app_button.dart';
 import 'package:diabetes_app/components/app_icon.dart';
 import 'package:diabetes_app/components/app_return_icon_button.dart';
 import 'package:diabetes_app/components/extendable_text_widget.dart';
@@ -6,6 +8,7 @@ import 'package:diabetes_app/utils/dimenstions.dart';
 import 'package:flutter/material.dart';
 
 import '../../components/app_column.dart';
+import '../../utils/colors.dart';
 
 
 class TopRatedFoodDetails extends StatelessWidget {
@@ -54,7 +57,7 @@ class TopRatedFoodDetails extends StatelessWidget {
                   children: [
                     AppColumn(text: 'Chicken',),
                     SizedBox(height: Dimensions.height20,),
-                    Text("Description"),
+                    AppBigText(text: "Description"),
                     SizedBox(height: Dimensions.height20,),
                     const Expanded(
                       child: SingleChildScrollView(
@@ -85,20 +88,29 @@ class TopRatedFoodDetails extends StatelessWidget {
           // expanded text
         ],
       ),
-      // bottomNavigationBar: Container(
-      //   height: 100,
-      //   padding: EdgeInsets.only(top: Dimensions.height30,
-      //       bottom: Dimensions.height30 ,
-      //       left: Dimensions.height20,
-      //       right: Dimensions.height20),
-      //   decoration: BoxDecoration(
-      //     color: Colors.black45,
-      //     borderRadius: BorderRadius.only(
-      //       topLeft: Radius.circular(Dimensions.radius20,),
-      //       topRight: Radius.circular(Dimensions.radius20,),
-      //     )
-      //   ),
-      // ),
+      bottomNavigationBar: GestureDetector(
+        child: Container(
+          height: 50,
+          padding: EdgeInsets.only(
+              left: Dimensions.height20,
+              right: Dimensions.height20),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(Dimensions.radius20,),
+              topRight: Radius.circular(Dimensions.radius20,),
+            )
+          ),
+          child:Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              AppButton(text: "Add to my counter",textColor: Colors.white,height: 50,)
+            ],
+          ),
+        ),
+        onTap: () {
+
+        },
+      ),
     );
   }
 }

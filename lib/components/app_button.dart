@@ -10,16 +10,16 @@ class AppButton extends StatelessWidget {
   Color? borderColor ;
   final Color textColor ;
   IconData? icon ;
-  double? width ;
+  double? width = Dimensions.screenWidth/2 ;
   double? height;
 
 
 
    AppButton({Key? key , required this.text ,
-    this.textColor = Colors.red,
-    this.backgroundColor = AppColors.background,
+    this.textColor = AppColors.onTertiary,
+    this.backgroundColor = AppColors.onPrimaryContainer,
      this.borderColor ,
-     this.width,
+     this.width ,
      this.height,
      this.icon
   }
@@ -29,18 +29,22 @@ class AppButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.all(Dimensions.height5),
+      padding: EdgeInsets.all(Dimensions.height10),
       width: width,
       height: height,
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(Dimensions.height10),
         border: Border.all(
           // color: borderColor,
-          width: 2,
+          width: 1,
+          color: backgroundColor
         ),
         color: backgroundColor,
       ),
       child: Center(
         child: Text(text , style: TextStyle(
         color: textColor,
+          fontFamily: 'Roboto'
         )
         ),
       ),

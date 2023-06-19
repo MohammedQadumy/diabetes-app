@@ -20,7 +20,7 @@ class MyIconTextWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return  Row(
       children: [
-        AppIcon(icon: this.icon,size: Dimensions.iconSize30,backgroundColor: AppColors.secondaryContainer,iconColor: this.iconColor,),
+        AppIcon(icon: this.icon,size: Dimensions.iconSize30,backgroundColor: AppColors.onPrimaryContainer,iconColor: this.iconColor,),
         SizedBox(width: 5,),
         Text(text , style: TextStyle(
           color: this.color

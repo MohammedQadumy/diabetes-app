@@ -1,5 +1,6 @@
 
 
+import 'package:diabetes_app/components/app_big_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -16,14 +17,12 @@ class AppColumn extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(text ,style: TextStyle(
-          color: AppColors.background
-        ),
+        AppBigText(text: text,
         ),
         SizedBox(height: Dimensions.height10,),
         Row(children: [
           // wrap widget used to draw things multiple times
-          Wrap(children: List.generate(5, (index) => const Icon(Icons.star , color: AppColors.onSecondary,)),),
+          Wrap(children: List.generate(5, (index) => const Icon(Icons.star , color: AppColors.onPrimaryContainer,)),),
           SizedBox(width: Dimensions.height10,),
           const Text("rating : 3")
           // can add clickable text here

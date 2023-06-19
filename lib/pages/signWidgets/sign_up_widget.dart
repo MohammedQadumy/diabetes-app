@@ -17,7 +17,7 @@ import 'package:http/http.dart' as http;
 class SignUpWidget extends StatefulWidget {
 
 
-  const SignUpWidget({Key? key}) : super(key: key);
+  const SignUpWidget({Key? key,}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -27,8 +27,7 @@ class SignUpWidget extends StatefulWidget {
 
 }
 
-  class SignUpState extends State<SignUpWidget>{
-
+  class SignUpState extends State<SignUpWidget> {
 
 
     final firstNameController = TextEditingController();
@@ -38,7 +37,7 @@ class SignUpWidget extends StatefulWidget {
     final passwordController = TextEditingController();
     final rePasswordController = TextEditingController();
 
-    bool isCompleted = false ;
+    bool isCompleted = false;
 
 
     Future<String> _signUp(User addedUser) async {
@@ -69,59 +68,74 @@ class SignUpWidget extends StatefulWidget {
     }
 
 
-    void _registration(){
-
+    void registration() {
       var authController = Get.find<AuthController>();
 
       String firstName = firstNameController.text.trim();
       String lastname = lastNameController.text.trim();
       String username = userNameController.text.trim();
-      String email = emailController.text.trim();
+      String email = emailController.text;
       String password = passwordController.text.trim();
 
 
-      if(firstName.isEmpty){
-        showCustomSnackBar("type your name",title: "Name");
-
-      }else if(lastname.isEmpty){
-        showCustomSnackBar("type your last name",title: "Name");
-      }else if(username.isEmpty){
-        showCustomSnackBar("type your username",title: "Name");
-      }else if(!GetUtils.isEmail(email) || email.isEmpty){
-        showCustomSnackBar("type your email",title: "Name");
-      }else if(password.isEmpty || password.length <8){
-        showCustomSnackBar("type your password",title: "Name");
+      if (firstName.isEmpty) {
+        showCustomSnackBar("type your name", title: "Name");
+      } else if (lastname.isEmpty) {
+        showCustomSnackBar("type your last name", title: "Name");
+      } else if (username.isEmpty) {
+        showCustomSnackBar("type your username", title: "Name");
+      } else if (!GetUtils.isEmail(email) || email.isEmpty) {
+        showCustomSnackBar("type your email", title: "Name");
+      } else if (password.isEmpty || password.length < 8) {
+        showCustomSnackBar("type your password", title: "Name");
       }
-      else{
-              User newUser = User(firstName:firstName,
-              lastName: lastname,
-              userName: username,
-              password: email,
-              email: password
-              );
+      else {
+        print(email);
+        User newUser = User(firstName: firstName,
+            lastName: lastname,
+            userName: username,
+            password: password,
+            email: email
+        );
 
-              authController.registration(newUser).then((status){
-                if(status.isSuccess){
-                  print("Success registration");
-                }else{
-                  print("failed");
-                  showCustomSnackBar(status.message);
-                  print(status.message);
-                }
-              });
+        authController.registration(newUser).then((status) {
+          if (status.isSuccess) {
+            showCustomSnackBar("welcome , you signed successfully", title: "Hi $firstName");
+            print("Success registration");
+            isCompleted = true;
+          } else {
+            print("failed");
+            showCustomSnackBar(status.message);
+            print(status.message);
+            isCompleted = false;
+          }
+        });
 
-              // () async {
-              //   try {
-              //     await _signUp(newUser);
-              //     print('signed up');
-              //   } catch (e) {
-              //     showCustomSnackBar("User is already exists",title: "Name");
-              //     return Text("test");
-              //   }
-              // }();
+
+        //
+        // String logInUsername = authController.returnUserEmail();
+        // String logInpassword = authController.returnUserPassword();
+        //
+        // print(logInpassword);
+        // print(logInUsername);
+        //
+        //
+        //
+        //   authController.login(logInUsername, logInpassword).then((status) {
+        //     if (status.isSuccess) {
+        //       showCustomSnackBar(logInpassword, title: logInUsername);
+        //       print("Success log in");
+        //     } else {
+        //       print("failed");
+        //       showCustomSnackBar(status.message);
+        //       print(status.message);
+        //     }
+        //   });
 
       }
     }
+
+
 
 
 
@@ -135,7 +149,6 @@ class SignUpWidget extends StatefulWidget {
               height: Dimensions.iconImageWidthAndHeight,
               width: Dimensions.iconImageWidthAndHeight,
             ),
-
             AppTextField(controller: firstNameController,hintText: "First Name", icon: Icons.person, obscureText: false,),
              SizedBox(height: Dimensions.height5,),
             AppTextField(controller: lastNameController , hintText: "last Name", icon: Icons.person, obscureText: false,),
@@ -146,7 +159,6 @@ class SignUpWidget extends StatefulWidget {
              SizedBox(height: Dimensions.height5,),
             AppTextField(controller: passwordController , hintText: "password", icon: Icons.password, obscureText: true,),
              SizedBox(height: Dimensions.height5,),
-            ElevatedButton(onPressed:  _registration, child: Text("sign"))
           ],
         );
     }

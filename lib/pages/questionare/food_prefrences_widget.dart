@@ -1,4 +1,5 @@
 
+import 'package:diabetes_app/components/app_big_text.dart';
 import 'package:diabetes_app/components/app_elevated_button.dart';
 import 'package:diabetes_app/utils/app_constants.dart';
 import 'package:flutter/cupertino.dart';
@@ -41,7 +42,7 @@ class _FoodPrefrencesWidgetState extends State<FoodPrefrencesWidget> {
 
     return Column(
       children: [
-        Text(currentQuestion.text),
+        AppBigText(text:currentQuestion.text),
         ...currentQuestion.answers.map((answer){
             return AppElevateButton(text:answer , onTap:(){
                answerQuestion(currentQuestion.text,answer);
