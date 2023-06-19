@@ -13,7 +13,7 @@ class AppTextField extends StatelessWidget {
   AppTextField({
     super.key,
      required this.controller,
-     required this.hintText,
+      this.hintText = "",
     required this.icon,
     required this.obscureText,
   });

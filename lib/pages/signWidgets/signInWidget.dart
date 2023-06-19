@@ -47,7 +47,6 @@ class SignInWidget extends StatefulWidget{
       }
       else{
 
-
         authController.login(username , password).then((status){
           if(status.isSuccess){
             Navigator.push(context, MaterialPageRoute(builder: (context)=>  MainPage()),);

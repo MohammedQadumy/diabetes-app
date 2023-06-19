@@ -1,3 +1,4 @@
+import 'package:diabetes_app/pages/AppPage/new_meal_page.dart';
 import 'package:diabetes_app/pages/signWidgets/signInWidget.dart';
 import 'package:diabetes_app/pages/signWidgets/welcomePage.dart';
 import 'package:diabetes_app/pages/stats/stats_page.dart';
@@ -24,7 +25,7 @@ class MyApp extends StatefulWidget{
 class _MyAppState extends State<MyApp>{
   @override
   Widget build(BuildContext context) {
-    // welcomeWidget(), MainPage() ,StatsPage()
+    // welcomeWidget(), MainPage() ,StatsPage() ,NewMealPage
     //MainPage()
     return const GetMaterialApp(
       debugShowCheckedModeBanner: false,

@@ -105,38 +105,43 @@ class _FoodPageBodyState extends State<FoodPageBody> {
             child: ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: 5,itemBuilder: (context,index){
-              return Container(
-                margin: EdgeInsets.only(left: Dimensions.height10, right: Dimensions.height10,),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      height: 150,
-                      width: 150,
-                     margin:EdgeInsets.all(Dimensions.height10)
-                    ,decoration:  BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/test.jpg"
-                    ),
-                    fit: BoxFit.cover)
-                    ,borderRadius: BorderRadius.circular(Dimensions.radius10),
-                    ),  
-                    ),
-                    Expanded(
-                      child: Container(
-                        height: 120,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(Dimensions.radius10),
-                            bottomRight: Radius.circular(Dimensions.radius10)
+              return GestureDetector(
+                child: Container(
+                  margin: EdgeInsets.only(left: Dimensions.height10, right: Dimensions.height10,),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: 150,
+                        width: 150,
+                       margin:EdgeInsets.all(Dimensions.height10)
+                      ,decoration:  BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/test.jpg"
+                      ),
+                      fit: BoxFit.cover)
+                      ,borderRadius: BorderRadius.circular(Dimensions.radius10),
+                      ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 120,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(Dimensions.radius10),
+                              bottomRight: Radius.circular(Dimensions.radius10)
+                            ),
+                            color: Colors.red
                           ),
-                          color: Colors.red
+                        child: Padding(padding: EdgeInsets.only(left: Dimensions.height10,top: Dimensions.height10),
+                          child: AppColumn(text: "Testtttttttttttttttttttttttttttttttttttttttt"),
                         ),
-                      child: Padding(padding: EdgeInsets.only(left: Dimensions.height10,top: Dimensions.height10),
-                        child: AppColumn(text: "Testtttttttttttttttttttttttttttttttttttttttt"),
-                      ),
-                      ),
-                    )
-                  ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> TopRatedFoodDetails()));
+                },
               );
             }),
           ),
