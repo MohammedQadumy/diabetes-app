@@ -26,14 +26,15 @@ class AuthController extends GetxController implements GetxService {
     Response response = (await authRepo.registration(newUser));
     late ResponseModel responseModel;
     // print("the tokeeeeeeeeeeeeeeeeen:");
-     print(response.body);
+    //  print(response.body);
     if(response.statusCode == 200){
       print("controller status is 200");
+      authRepo.saveUserUserNameAndPassword(newUser.email, newUser.password);
       authRepo.saveUserToken(response.body["message"]);
       responseModel = ResponseModel(true, response.body["message"]);
     }
     else{
-      print(response.body["token"]);
+      // print(response.body["token"]);
       print("controller status is not 200");
       responseModel = ResponseModel(false, response.statusText!);
     }
@@ -58,7 +59,7 @@ class AuthController extends GetxController implements GetxService {
       responseModel = ResponseModel(true, response.body["access"]);
     }
     else{
-      print(response.body["token"]);
+      // print(response.body["token"]);
       print("controller status is not 200");
       responseModel = ResponseModel(false, response.statusText!);
     }
@@ -68,6 +69,15 @@ class AuthController extends GetxController implements GetxService {
     return responseModel;
   }
 
+
+
+  Future<String> getUserEmail(){
+     return authRepo.getUserEmail();
+  }
+
+  Future<String> getUserPassword(){
+    return authRepo.getUserEmail();
+  }
 
 
 

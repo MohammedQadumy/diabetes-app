@@ -36,10 +36,18 @@ class AuthRepo {
      return await sharedPreferences.getString(AppConstants.TOKEN)??"None";
   }
 
+  Future<String> getUserEmail() async {
+     return await sharedPreferences.getString(AppConstants.EMAIL)??"None";
+  }
+
+  Future<String> getUserPasswrod() async {
+    return await sharedPreferences.getString(AppConstants.PASSWORD)??"None";
+  }
 
   
   Future<void> saveUserUserNameAndPassword(String email, String password)async {
      try{
+       print("$email and $password");
        await sharedPreferences.setString(AppConstants.EMAIL, email);
        await sharedPreferences.setString(AppConstants.PASSWORD, password);
      }

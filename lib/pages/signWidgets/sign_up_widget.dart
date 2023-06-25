@@ -8,6 +8,7 @@ import 'package:diabetes_app/utils/app_constants.dart';
 import 'package:diabetes_app/utils/dimenstions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../base/show_custom_message.dart';
 import '../../components/app_textfield.dart';
@@ -43,7 +44,7 @@ class SignUpWidget extends StatefulWidget {
 
 
 
-    void registration() {
+    Future<void> registration() async {
       var authController = Get.find<AuthController>();
 
       String firstName = firstNameController.text.trim();
@@ -76,7 +77,7 @@ class SignUpWidget extends StatefulWidget {
         );
 
         authController.registration(newUser).then((status) {
-          if (status.isSuccess) {
+          if(status.isSuccess) {
             // isCompleted = true;
           showCustomSnackBar("welcome , you signed up successfully", title: "Hi $firstName");
             print("Success registration");
@@ -91,17 +92,24 @@ class SignUpWidget extends StatefulWidget {
 
 
 
-        String logInUsername = AppConstants.EMAIL;
-        String logInpassword = AppConstants.PASSWORD;
+        // String logInEmail = authController.getUserEmail();
+        // String logInpassword = authController.getUserEmail();
+
+
+
+
+
+        String logInEmail = await authController.getUserEmail();
+        String logInpassword = await authController.getUserPassword();
 
         print(logInpassword+"mmmmmmmmmmmmmmmmmm");
-        print(logInUsername+"mmmmmmmmmmmmmmmmmm");
+        print(logInEmail+"mmmmmmmmmmmmmmmmmm");
 
 
 
-          authController.login(logInUsername, logInpassword).then((status) {
+          authController.login(logInEmail, logInpassword).then((status) {
             if (status.isSuccess) {
-              showCustomSnackBar("welcome , you signed in successfully", title: logInUsername);
+              showCustomSnackBar("welcome , you signed in successfully", title: logInEmail);
               print("Success log in");
             } else {
               print("failed login");

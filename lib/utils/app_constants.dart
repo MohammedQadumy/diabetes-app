@@ -7,11 +7,11 @@ class AppConstants {
   static const String BASE_URL = "http://13.51.162.14:8000";
   static const String REGISTRATION_URI = "/api/register/";
   static const String LOGIN_URI = "/api/login/";
+  static const String MEALS_URI = "/api/meals/";
 
 
-  static const String EMAIL = "";
-  static const String PASSWORD = "";
-
+  static const String EMAIL = "USER_EMAIL";
+  static const String PASSWORD = "USER_PASSWORD";
 
   static const TOP_RATED_MEALS_URI = " ";
 
