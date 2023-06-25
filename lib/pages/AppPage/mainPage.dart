@@ -4,7 +4,7 @@ import 'dart:ffi';
 import 'package:diabetes_app/components/app_big_text.dart';
 import 'package:diabetes_app/components/app_icon.dart';
 import 'package:diabetes_app/pages/AppPage/new_meal_page.dart';
-import 'package:diabetes_app/pages/AppPage/profile_page.dart';
+import 'package:diabetes_app/pages/profilePage/profile_page.dart';
 import 'package:diabetes_app/utils/colors.dart';
 import 'package:diabetes_app/utils/dimenstions.dart';
 import 'package:flutter/cupertino.dart';
@@ -31,7 +31,7 @@ class _MainPageState extends State<MainPage>{
     print(MediaQuery.of(context).size.height.toString());
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.nearlyWhite,
       body: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -56,7 +56,7 @@ class _MainPageState extends State<MainPage>{
                       child: Icon(Icons.add,color: Colors.black,size: Dimensions.iconSize24),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(Dimensions.radius15),
-                        color: AppColors.secondaryContainer,
+                        color: AppColors.chipBackground,
                       ),
 
                     ),
@@ -75,15 +75,21 @@ class _MainPageState extends State<MainPage>{
       bottomNavigationBar: Container(
         height: Dimensions.height45,
         decoration: BoxDecoration(
-          color: AppColors.secondaryContainer
+          color: AppColors.chipBackground,
+          borderRadius: BorderRadius.circular(Dimensions.height10),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            InkWell(child: AppIcon(icon: Icons.home),
+            // home page icon
+            GestureDetector(child: AppIcon(icon: Icons.home),
             onTap: () {
             },),
+            // daily calories , protien , carbs counters and stats
             AppIcon(icon: Icons.food_bank_rounded),
+            // explore new meals
+            AppIcon(icon: Icons.explore),
+            // profile page
             GestureDetector(child: AppIcon(icon: Icons.person) , onTap: (){
               Navigator.push(context, MaterialPageRoute(builder: (context)=> ProfilePage()));
             },

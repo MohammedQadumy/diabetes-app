@@ -141,6 +141,9 @@ class _StepperWidgetState extends State<StepperWidget> {
 
 // change state decoration when step is completed
 
+
+  late bool isCompleted;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -149,7 +152,7 @@ class _StepperWidgetState extends State<StepperWidget> {
         body: Form(
           child: Theme(
             data: ThemeData(
-              colorScheme: Theme.of(context).colorScheme.copyWith(primary: AppColors.onPrimaryContainer)
+              colorScheme: Theme.of(context).colorScheme.copyWith(primary: AppColors.nearlyBlack)
             ),
             child: Stepper(
               controlsBuilder:(BuildContext context, ControlsDetails controls) {

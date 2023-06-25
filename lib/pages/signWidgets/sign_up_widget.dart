@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:diabetes_app/Models/User.dart';
 import 'package:diabetes_app/controllers/auth_controller.dart';
+import 'package:diabetes_app/utils/app_constants.dart';
 import 'package:diabetes_app/utils/dimenstions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,7 +18,8 @@ import 'package:http/http.dart' as http;
 class SignUpWidget extends StatefulWidget {
 
 
-  const SignUpWidget({Key? key,}) : super(key: key);
+
+  SignUpWidget({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -37,35 +39,8 @@ class SignUpWidget extends StatefulWidget {
     final passwordController = TextEditingController();
     final rePasswordController = TextEditingController();
 
-    bool isCompleted = false;
+     // late bool isCompleted = true ;
 
-
-    Future<String> _signUp(User addedUser) async {
-      final response = await http.post(
-        Uri.parse('http://13.51.162.14:8000/api/register/'),
-        headers: <String, String>{
-          'Content-Type': 'application/json',
-          // 'Authorization': 'Bearer $token',
-        },
-        body: jsonEncode(<String, String>{
-          'email': addedUser.email,
-          'password': addedUser.password,
-          'first_name': addedUser.firstName,
-          'last_name': addedUser.lastName,
-          'username': addedUser.userName
-        }),
-      );
-
-      if (response.statusCode == 200) {
-        // If the server returns a 200 OK response,
-        // then parse the JSON.
-        return "Signed up succefully";
-      } else {
-        // If the server did not return a 200 OK response,
-        // then throw an exception.
-        throw Exception('Failed to login.');
-      }
-    }
 
 
     void registration() {
@@ -76,6 +51,8 @@ class SignUpWidget extends StatefulWidget {
       String username = userNameController.text.trim();
       String email = emailController.text;
       String password = passwordController.text.trim();
+
+
 
 
       if (firstName.isEmpty) {
@@ -100,37 +77,38 @@ class SignUpWidget extends StatefulWidget {
 
         authController.registration(newUser).then((status) {
           if (status.isSuccess) {
-            showCustomSnackBar("welcome , you signed successfully", title: "Hi $firstName");
+            // isCompleted = true;
+          showCustomSnackBar("welcome , you signed up successfully", title: "Hi $firstName");
             print("Success registration");
-            isCompleted = true;
+
           } else {
-            print("failed");
+            // isCompleted = false;
+            print("failed sign up");
             showCustomSnackBar(status.message);
             print(status.message);
-            isCompleted = false;
           }
         });
 
 
-        //
-        // String logInUsername = authController.returnUserEmail();
-        // String logInpassword = authController.returnUserPassword();
-        //
-        // print(logInpassword);
-        // print(logInUsername);
-        //
-        //
-        //
-        //   authController.login(logInUsername, logInpassword).then((status) {
-        //     if (status.isSuccess) {
-        //       showCustomSnackBar(logInpassword, title: logInUsername);
-        //       print("Success log in");
-        //     } else {
-        //       print("failed");
-        //       showCustomSnackBar(status.message);
-        //       print(status.message);
-        //     }
-        //   });
+
+        String logInUsername = AppConstants.EMAIL;
+        String logInpassword = AppConstants.PASSWORD;
+
+        print(logInpassword+"mmmmmmmmmmmmmmmmmm");
+        print(logInUsername+"mmmmmmmmmmmmmmmmmm");
+
+
+
+          authController.login(logInUsername, logInpassword).then((status) {
+            if (status.isSuccess) {
+              showCustomSnackBar("welcome , you signed in successfully", title: logInUsername);
+              print("Success log in");
+            } else {
+              print("failed login");
+              showCustomSnackBar(status.message);
+              print(status.message);
+            }
+          });
 
       }
     }

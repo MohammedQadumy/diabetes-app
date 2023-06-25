@@ -69,12 +69,7 @@ class AuthController extends GetxController implements GetxService {
   }
 
 
-  // String returnUserEmail() {
-  //    return authRepo.getUserEmail();
-  // }
-  // String returnUserPassword() {
-  //   return authRepo.getUserPassword();
-  // }
+
 
   void saveUserUserNameAndPassword(String userName, String password)async {
      authRepo.saveUserUserNameAndPassword(userName, password);

@@ -69,7 +69,7 @@ class SignInWidget extends StatefulWidget{
     @override
     Widget build(BuildContext context) {
       return Scaffold(
-        backgroundColor:  AppColors.background,
+        backgroundColor:  AppColors.nearlyWhite,
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -93,7 +93,7 @@ class SignInWidget extends StatefulWidget{
                       );},
                         child: const Text("Create" ,style: TextStyle(
                       fontWeight: FontWeight.bold,
-                          color: AppColors.primary
+                          color: AppColors.darkerText
                     ),
                     )
                     )

@@ -66,9 +66,9 @@ class _NewMealPageState extends State<NewMealPage> {
                   child: AppButton(text: "ADD" ,height: 50,width: Dimensions.screenWidth/1.5,
                   ),
               onTap: () {
-                    String newIngredientPortion = IngredientPortion.toString();
+                    String newIngredientPortion = IngredientPortion.text;
 
-                    Ingredient newIngredient = Ingredient(newIngredientPortion,textEdittingValue.toString().trim() );
+                    Ingredient newIngredient = Ingredient(newIngredientPortion,textEdittingValue.text );
                     print(newIngredient.name);
                     print(newIngredient.portion);
 
@@ -103,7 +103,7 @@ class _NewMealPageState extends State<NewMealPage> {
                                     :  Column(
                                   children: AddedIngredients.map(
                                           (ingredient) => Chip(
-                                        label: Text(ingredient.name),
+                                        label: Text("${ingredient.name}:${ingredient.portion}"),
                                             backgroundColor: Colors.green,
                                       ),
                                   ).toList(),
@@ -124,8 +124,6 @@ class _NewMealPageState extends State<NewMealPage> {
                 child: Text("the stats of new meal"),
               )
             ],
-
-
 
           ),
         ),

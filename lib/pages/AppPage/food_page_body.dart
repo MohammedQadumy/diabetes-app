@@ -129,7 +129,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                               topRight: Radius.circular(Dimensions.radius10),
                               bottomRight: Radius.circular(Dimensions.radius10)
                             ),
-                            color: Colors.red
+                            color: AppColors.chipBackground
                           ),
                         child: Padding(padding: EdgeInsets.only(left: Dimensions.height10,top: Dimensions.height10),
                           child: AppColumn(text: "Testtttttttttttttttttttttttttttttttttttttttt"),
@@ -209,16 +209,16 @@ class _FoodPageBodyState extends State<FoodPageBody> {
               margin: EdgeInsets.only(left: Dimensions.height30,right: Dimensions.height30 , bottom: Dimensions.height25 ),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(Dimensions.radius30),
-                color:  AppColors.secondaryContainer,
+                color:  AppColors.chipBackground,
                 boxShadow: const [
-                  BoxShadow(color: Color(0xFFe8e8e8),
+                  BoxShadow(color: AppColors.chipBackground,
                     blurRadius: 5,
                     offset: Offset(0, 5)
                   ),
-                  BoxShadow(color: Colors.white,
+                  BoxShadow(color: AppColors.chipBackground,
                       offset: Offset(-5, 0)
                   ),
-                  BoxShadow(color: Colors.white,
+                  BoxShadow(color: AppColors.chipBackground,
                       offset: Offset(5, 0)
                   ),
                 ]

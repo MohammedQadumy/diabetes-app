@@ -31,7 +31,7 @@ class AppTextField extends StatelessWidget {
                 blurRadius: Dimensions.height10,
                 spreadRadius: Dimensions.height5,
                 offset: Offset(1,Dimensions.height10),
-                color: AppColors.onPrimary.withOpacity(0.2)
+                color: AppColors.nearlyWhite.withOpacity(0.2)
             )
           ],
       ),
@@ -40,7 +40,7 @@ class AppTextField extends StatelessWidget {
         controller: controller,
         // obscureText: obscureText,
         decoration: InputDecoration(
-          prefixIcon: Icon(icon , color: AppColors.tertiary),
+          prefixIcon: Icon(icon , color: AppColors.grey),
           enabledBorder:  OutlineInputBorder(
               borderSide: BorderSide(color: Colors.white),
               borderRadius: BorderRadius.circular(Dimensions.height20)

@@ -16,8 +16,8 @@ class AppButton extends StatelessWidget {
 
 
    AppButton({Key? key , required this.text ,
-    this.textColor = AppColors.onTertiary,
-    this.backgroundColor = AppColors.onPrimaryContainer,
+    this.textColor = AppColors.white,
+    this.backgroundColor = AppColors.nearlyBlack,
      this.borderColor ,
      this.width ,
      this.height,

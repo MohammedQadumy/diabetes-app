@@ -18,13 +18,14 @@ class AppColumn extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         AppBigText(text: text,
+          color: AppColors.darkText,
         ),
         SizedBox(height: Dimensions.height10,),
         Row(children: [
           // wrap widget used to draw things multiple times
-          Wrap(children: List.generate(5, (index) => const Icon(Icons.star , color: AppColors.onPrimaryContainer,)),),
+          Wrap(children: List.generate(5, (index) => const Icon(Icons.star , color: AppColors.darkText,)),),
           SizedBox(width: Dimensions.height10,),
-          const Text("rating : 3")
+           AppBigText(color: AppColors.darkText, text: 'rating : 3',)
           // can add clickable text here
         ],
         ),
@@ -32,9 +33,9 @@ class AppColumn extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: const [
-            MyIconTextWidget(icon: Icons.circle, text: "hot", color: Colors.black, iconColor: Colors.red),
-            MyIconTextWidget(icon: Icons.food_bank, text: "lunch", color: Colors.black, iconColor: Colors.blue),
-            MyIconTextWidget(icon: Icons.spa, text: "spicy", color: Colors.black, iconColor: Colors.red),
+            MyIconTextWidget(icon: Icons.circle, text: "hot", color: AppColors.chipBackground, iconColor: AppColors.darkText),
+            MyIconTextWidget(icon: Icons.food_bank, text: "lunch", color: AppColors.chipBackground, iconColor: AppColors.darkText),
+            MyIconTextWidget(icon: Icons.spa, text: "spicy", color: AppColors.chipBackground, iconColor: AppColors.darkText),
           ],
         ),
       ],
