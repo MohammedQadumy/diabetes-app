@@ -17,7 +17,7 @@ class _NewMealPageState extends State<NewMealPage> {
   String selectedIngredient = '';
 
 
-  late List<Meal> meals ;
+  late List<dynamic> meals ;
 
   Future<void> fillList() async {
     var mealController = Get.find<MealController>();

@@ -5,6 +5,7 @@ import 'package:diabetes_app/components/app_big_text.dart';
 import 'package:diabetes_app/components/app_icon.dart';
 import 'package:diabetes_app/pages/AppPage/new_meal_page.dart';
 import 'package:diabetes_app/pages/profilePage/profile_page.dart';
+import 'package:diabetes_app/pages/stats/stats_page.dart';
 import 'package:diabetes_app/utils/colors.dart';
 import 'package:diabetes_app/utils/dimenstions.dart';
 import 'package:flutter/cupertino.dart';
@@ -88,7 +89,9 @@ class _MainPageState extends State<MainPage>{
             // daily calories , protien , carbs counters and stats
             AppIcon(icon: Icons.food_bank_rounded),
             // explore new meals
-            AppIcon(icon: Icons.explore),
+            GestureDetector(child: AppIcon(icon: Icons.percent) , onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> const StatsPage()));
+            },),
             // profile page
             GestureDetector(child: AppIcon(icon: Icons.person) , onTap: (){
               Navigator.push(context, MaterialPageRoute(builder: (context)=> ProfilePage()));

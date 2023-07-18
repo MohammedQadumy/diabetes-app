@@ -1,6 +1,6 @@
+import 'package:diabetes_app/pages/AppPage/mainPage.dart';
 import 'package:diabetes_app/pages/AppPage/new_meal_page.dart';
 import 'package:diabetes_app/pages/signWidgets/signInWidget.dart';
-import 'package:diabetes_app/pages/signWidgets/welcomePage.dart';
 import 'package:diabetes_app/pages/stats/stats_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
@@ -30,7 +30,7 @@ class _MyAppState extends State<MyApp>{
     return const GetMaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body:  SignInWidget(),
+        body:  MainPage(),
       ),
     );
   }

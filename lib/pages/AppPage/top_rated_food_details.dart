@@ -1,19 +1,24 @@
 
+
 import 'package:diabetes_app/components/app_big_text.dart';
 import 'package:diabetes_app/components/app_button.dart';
-import 'package:diabetes_app/components/app_icon.dart';
 import 'package:diabetes_app/components/app_return_icon_button.dart';
 import 'package:diabetes_app/components/extendable_text_widget.dart';
 import 'package:diabetes_app/utils/dimenstions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../../components/app_column.dart';
-import '../../utils/colors.dart';
 
-
-class TopRatedFoodDetails extends StatelessWidget {
+class TopRatedFoodDetails extends StatefulWidget {
   const TopRatedFoodDetails({Key? key}) : super(key: key);
 
+  @override
+  State<TopRatedFoodDetails> createState() => _TopRatedFoodDetailsState();
+}
+
+class _TopRatedFoodDetailsState extends State<TopRatedFoodDetails> {
+  double  rating = 0 ;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,14 +29,14 @@ class TopRatedFoodDetails extends StatelessWidget {
               left: 0,
               right: 0,
               child: Container(
-              width: double.maxFinite,
+                width: double.maxFinite,
                 height: Dimensions.detailsImageHeight,
                 decoration:  BoxDecoration(image: DecorationImage(
                     fit: BoxFit.cover,
                     image: AssetImage("assets/images/test.jpg")
                 )
                 ),
-          )
+              )
           ),
           Positioned(
               left: Dimensions.height10,
@@ -49,8 +54,8 @@ class TopRatedFoodDetails extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.only(left: Dimensions.height20,right: Dimensions.height20,top: Dimensions.height20,bottom: Dimensions.height20),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(topRight:Radius.circular(Dimensions.radius20),topLeft:Radius.circular(Dimensions.radius20)),
-                  color: Colors.white
+                    borderRadius: BorderRadius.only(topRight:Radius.circular(Dimensions.radius20),topLeft:Radius.circular(Dimensions.radius20)),
+                    color: Colors.white
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,7 +88,7 @@ class TopRatedFoodDetails extends StatelessWidget {
 
                   ],
                 ),
-          )
+              )
           )
           // expanded text
         ],
@@ -95,22 +100,52 @@ class TopRatedFoodDetails extends StatelessWidget {
               left: Dimensions.height20,
               right: Dimensions.height20),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(Dimensions.radius20,),
-              topRight: Radius.circular(Dimensions.radius20,),
-            )
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(Dimensions.radius20,),
+                topRight: Radius.circular(Dimensions.radius20,),
+              )
           ),
           child:Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              AppButton(text: "Add to my counter",textColor: Colors.white,height: 50,)
+              AppButton(text: "Rate this Meal",textColor: Colors.white,height: 50,),
+              GestureDetector(
+                child: AppButton(text: "Add to my counter",textColor: Colors.white,height: 50,),
+                 onTap:() => showRating(),
+              )
             ],
           ),
         ),
-        onTap: () {
-
-        },
       ),
     );
   }
+  
+  void showRating(){
+    showDialog(context: this.context, builder: (context) => AlertDialog(
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          AppBigText(text: "Leave a Rating"),
+          buildRating(),
+        ],
+      ),
+      actions: [
+        TextButton(onPressed: ()=> Navigator.pop(context), child: AppBigText(text: "Ok"))
+      ],
+    )
+    );
+  }
+
+  Widget buildRating() => RatingBar.builder(
+      minRating: 1,
+      itemSize: 46,
+      itemPadding: EdgeInsets.symmetric(horizontal: 5 , vertical: 5),
+      itemBuilder: (context,_) => Icon(Icons.star),
+      onRatingUpdate: (rating) => setState(() {
+        this.rating = rating;
+      }),
+  );
 }
+
+
+
