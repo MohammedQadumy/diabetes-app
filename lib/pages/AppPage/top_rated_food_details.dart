@@ -4,6 +4,7 @@ import 'package:diabetes_app/components/app_big_text.dart';
 import 'package:diabetes_app/components/app_button.dart';
 import 'package:diabetes_app/components/app_return_icon_button.dart';
 import 'package:diabetes_app/components/extendable_text_widget.dart';
+import 'package:diabetes_app/utils/colors.dart';
 import 'package:diabetes_app/utils/dimenstions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -108,10 +109,10 @@ class _TopRatedFoodDetailsState extends State<TopRatedFoodDetails> {
           child:Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              AppButton(text: "Rate this Meal",textColor: Colors.white,height: 50,),
+              GestureDetector(child: AppButton(text: "Rate this Meal",textColor: Colors.white,height: 50,) ,
+                onTap:() => showRating(),),
               GestureDetector(
-                child: AppButton(text: "Add to my counter",textColor: Colors.white,height: 50,),
-                 onTap:() => showRating(),
+                child: AppButton(text: "Add to my counter",textColor: Colors.white,height: 50,)
               )
             ],
           ),
@@ -130,7 +131,7 @@ class _TopRatedFoodDetailsState extends State<TopRatedFoodDetails> {
         ],
       ),
       actions: [
-        TextButton(onPressed: ()=> Navigator.pop(context), child: AppBigText(text: "Ok"))
+        TextButton(onPressed: ()=> Navigator.pop(context), child: AppBigText(text: "Rate" , color: AppColors.nearlyBlack,))
       ],
     )
     );

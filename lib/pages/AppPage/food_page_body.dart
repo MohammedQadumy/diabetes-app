@@ -95,7 +95,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                 ),
               ),
               SizedBox(width: Dimensions.height10,),
-              AppBigText(text: "Customize"),
+              GestureDetector(onTap:null,child: AppBigText(text: "new plan")),
               SizedBox(width: Dimensions.height10,)
             ],
           ),

@@ -1,9 +1,15 @@
+import 'package:diabetes_app/components/app_big_text.dart';
+import 'package:diabetes_app/components/app_button.dart';
+import 'package:diabetes_app/components/app_return_icon_button.dart';
 import 'package:diabetes_app/controllers/meals_controller.dart';
+import 'package:diabetes_app/pages/stats/calories_portions_widget.dart';
+import 'package:diabetes_app/utils/dimenstions.dart';
 import 'package:flutter/material.dart';
 import 'package:diabetes_app/Models/Ingredient.dart';
 import 'package:get/get.dart';
 
 import '../../Models/Meal.dart';
+import '../../utils/colors.dart';
 
 class NewMealPage extends StatefulWidget {
   const NewMealPage({Key? key}) : super(key: key);
@@ -37,30 +43,22 @@ class _NewMealPageState extends State<NewMealPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('New Meal'),
-        centerTitle: true,
-        backgroundColor: Colors.blue,
-      ),
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Select Ingredient',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              AppReturnIconButton(),
+              SizedBox(height: Dimensions.height20,),
+              
+              AppBigText(text: "Select ingredient",),
               SizedBox(height: 10.0),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.0),
-                  border: Border.all(color: Colors.blue, width: 1),
+                  border: Border.all(color: AppColors.nearlyBlack, width: 1),
                 ),
                 child: Autocomplete<String>(
                   optionsBuilder: (TextEditingValue textEdittingValue) {
@@ -77,101 +75,82 @@ class _NewMealPageState extends State<NewMealPage> {
                       selectedIngredient = selection;
                     });
                   },
+                  fieldViewBuilder: (BuildContext context, TextEditingController textEditingController, FocusNode focusNode, VoidCallback onFieldSubmitted) {
+                    return TextField(
+                      controller: textEditingController,
+                      focusNode: focusNode,
+                      cursorColor: Colors.black, // Set the cursor color to black
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                      ),
+                    );
+                  },
                 ),
               ),
               SizedBox(height: 20.0),
-              Text(
-                'Portion',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              AppBigText(text: "Portion",),
               SizedBox(height: 10.0),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 10.0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.0),
-                  border: Border.all(color: Colors.blue, width: 1),
-                ),
-                child: TextField(
-                  controller: IngredientPortion,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(border: InputBorder.none),
-                ),
-              ),
-              SizedBox(height: 20.0),
-              ElevatedButton(
-                onPressed: () {
-                  String newIngredientPortion = IngredientPortion.text;
-                  print(selectedIngredient);
-                  Ingredient newIngredient =
-                  Ingredient(selectedIngredient, newIngredientPortion);
-                  print(newIngredient.name);
-                  print(newIngredient.portion);
-
-                  setState(() {
-                    AddedIngredients.add(newIngredient);
-                  });
-                },
-                child: Text('Add Ingredient'),
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.blue,
-                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                  textStyle: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Container(
+                    width: Dimensions.screenWidth/2,
+                    height: Dimensions.screenHeight/18,
+                    padding: EdgeInsets.symmetric(horizontal: 10.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.0),
+                      border: Border.all(color: AppColors.nearlyBlack, width: 1),
+                    ),
+                    child: TextField(
+                      controller: IngredientPortion,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(border: InputBorder.none),
+                      cursorColor: AppColors.nearlyBlack,
+                    ),
                   ),
-                ),
+                SizedBox(width: Dimensions.height10,),
+                Text("weight in gm" , style: TextStyle(
+                  color: AppColors.nearlyBlack.withOpacity(0.5)
+                ),)
+                ],
               ),
               SizedBox(height: 20.0),
-              Text(
-                'Added Ingredients',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+              GestureDetector(
+                child: AppButton(text: "add Ingredient"),
+                onTap: () {
+                    String newIngredientPortion = IngredientPortion.text;
+                    print(selectedIngredient);
+                    Ingredient newIngredient =
+                    Ingredient(selectedIngredient, newIngredientPortion);
+                    print(newIngredient.name);
+                    print(newIngredient.portion);
+
+                    setState(() {
+                      AddedIngredients.add(newIngredient);
+                    });
+                  },
               ),
+              
               SizedBox(height: 10.0),
-              Wrap(
+              AddedIngredients.length == 0?AppBigText(text: "No Ingredient Added"): Wrap(
                 spacing: 8.0,
                 runSpacing: 4.0,
-                children: AddedIngredients.map(
+                children:AddedIngredients.map(
                       (ingredient) => Chip(
                     label: Text(
                       "${ingredient.name}:${ingredient.portion}",
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                       ),
                     ),
-                    backgroundColor: Colors.blue,
+                    backgroundColor: AppColors.nearlyBlack,
                   ),
                 ).toList(),
               ),
               SizedBox(height: 20.0),
-              Text(
-                'Meal Nutrition Portions',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              AppBigText(text: "Meal Nutrition Values",),
               SizedBox(height: 10.0),
-              Container(
-                padding: EdgeInsets.all(16.0),
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.0),
-                  color: Colors.blue,
-                ),
-                child: Text(
-                  "The stats of new meal will go here...",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                  ),
-                ),
-              ),
+              MediterranesnDietView()
             ],
           ),
         ),
