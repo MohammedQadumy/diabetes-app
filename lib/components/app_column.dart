@@ -10,6 +10,7 @@ import 'icon_and_text_widget.dart';
 
 class AppColumn extends StatelessWidget {
   final String text;
+
   const AppColumn({Key? key , required this.text}) : super(key: key);
 
   @override
@@ -33,9 +34,9 @@ class AppColumn extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: const [
-            MyIconTextWidget(icon: Icons.circle, text: "hot", color: AppColors.chipBackground, iconColor: AppColors.darkText),
-            MyIconTextWidget(icon: Icons.food_bank, text: "lunch", color: AppColors.chipBackground, iconColor: AppColors.darkText),
-            MyIconTextWidget(icon: Icons.spa, text: "spicy", color: AppColors.chipBackground, iconColor: AppColors.darkText),
+            MyIconTextWidget(icon: Icons.circle, text: "hot", color: AppColors.nearlyBlack, iconColor: AppColors.darkText),
+            MyIconTextWidget(icon: Icons.food_bank, text: "lunch", color: AppColors.nearlyBlack, iconColor: AppColors.darkText),
+            MyIconTextWidget(icon: Icons.spa, text: "spicy", color: AppColors.nearlyBlack, iconColor: AppColors.darkText),
           ],
         ),
       ],

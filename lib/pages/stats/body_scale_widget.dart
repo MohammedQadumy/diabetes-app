@@ -66,7 +66,7 @@ class BodyMeasurementView extends StatelessWidget {
                                 padding: EdgeInsets.only(
                                     left: 4, bottom: 3),
                                 child: Text(
-                                  '206.8',
+                                  '85',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontFamily: FitnessAppTheme.fontName,
@@ -80,7 +80,7 @@ class BodyMeasurementView extends StatelessWidget {
                                 padding: EdgeInsets.only(
                                     left: 8, bottom: 8),
                                 child: Text(
-                                  'Ibs',
+                                  'KG',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontFamily: FitnessAppTheme.fontName,
@@ -97,49 +97,7 @@ class BodyMeasurementView extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: <Widget>[
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Icon(
-                                    Icons.access_time,
-                                    color: FitnessAppTheme.grey
-                                        .withOpacity(0.5),
-                                    size: 16,
-                                  ),
-                                  Padding(
-                                    padding:
-                                    const EdgeInsets.only(left: 4.0),
-                                    child: Text(
-                                      'Today 8:26 AM',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontFamily:
-                                        FitnessAppTheme.fontName,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14,
-                                        letterSpacing: 0.0,
-                                        color: FitnessAppTheme.grey
-                                            .withOpacity(0.5),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.only(
-                                    top: 4, bottom: 14),
-                                child: Text(
-                                  'InBody SmartScale',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontFamily: FitnessAppTheme.fontName,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 12,
-                                    letterSpacing: 0.0,
-                                    color: FitnessAppTheme.nearlyDarkBlue,
-                                  ),
-                                ),
-                              ),
+
                             ],
                           )
                         ],
@@ -206,7 +164,7 @@ class BodyMeasurementView extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
                                 const Text(
-                                  '27.3 BMI',
+                                  '28 BMI',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontFamily: FitnessAppTheme.fontName,
@@ -235,44 +193,6 @@ class BodyMeasurementView extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: <Widget>[
-                                const Text(
-                                  '20%',
-                                  style: TextStyle(
-                                    fontFamily: FitnessAppTheme.fontName,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16,
-                                    letterSpacing: -0.2,
-                                    color: FitnessAppTheme.darkText,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 6),
-                                  child: Text(
-                                    'Body fat',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontFamily: FitnessAppTheme.fontName,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 12,
-                                      color: FitnessAppTheme.grey
-                                          .withOpacity(0.5),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      )
                     ],
                   ),
                 )

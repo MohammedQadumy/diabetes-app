@@ -1,8 +1,10 @@
 import 'package:diabetes_app/components/app_big_text.dart';
 import 'package:diabetes_app/components/app_button.dart';
 import 'package:diabetes_app/components/app_return_icon_button.dart';
+import 'package:diabetes_app/components/app_textfield.dart';
 import 'package:diabetes_app/controllers/meals_controller.dart';
 import 'package:diabetes_app/pages/stats/calories_portions_widget.dart';
+import 'package:diabetes_app/pages/stats/new_meal_calories_counter.dart';
 import 'package:diabetes_app/utils/dimenstions.dart';
 import 'package:flutter/material.dart';
 import 'package:diabetes_app/Models/Ingredient.dart';
@@ -20,8 +22,8 @@ class NewMealPage extends StatefulWidget {
 
 class _NewMealPageState extends State<NewMealPage> {
   TextEditingController IngredientPortion = TextEditingController();
+  TextEditingController mealNameController = TextEditingController();
   String selectedIngredient = '';
-
 
   late List<dynamic> meals ;
 
@@ -138,19 +140,41 @@ class _NewMealPageState extends State<NewMealPage> {
                 children:AddedIngredients.map(
                       (ingredient) => Chip(
                     label: Text(
-                      "${ingredient.name}:${ingredient.portion}",
-                      style: const TextStyle(
+                      "${ingredient.name}gm: ${ingredient.portion}",
+                      style:  TextStyle(
                         color: Colors.white,
+                        fontSize: Dimensions.height15
                       ),
                     ),
                     backgroundColor: AppColors.nearlyBlack,
                   ),
                 ).toList(),
               ),
+              Container(
+                margin: EdgeInsets.symmetric(vertical: Dimensions.height20),
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText: "Name your meal",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(Dimensions.radius10),
+                    )
+                  ),
+                  controller: mealNameController,
+                ),
+              ),
+              GestureDetector(
+                child: Container(
+                    child: AppButton(text: "add Meal")),
+                onTap: () {
+                  // if meal meal controller is empty or invalid showCustomSnackBar
+                },
+              ),
+
               SizedBox(height: 20.0),
               AppBigText(text: "Meal Nutrition Values",),
-              SizedBox(height: 10.0),
-              MediterranesnDietView()
+              NewMealCounter(),
+
+
             ],
           ),
         ),
