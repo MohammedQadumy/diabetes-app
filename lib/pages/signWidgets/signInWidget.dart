@@ -78,10 +78,10 @@ class SignInWidget extends StatefulWidget{
                AppBigText(text: "Welcome back"),
                SizedBox(height: Dimensions.height20,),
               AppTextField(
-                  controller: _userNameController, hintText: "Enter UserName", icon: Icons.person, obscureText: false,),
+                  controller: _userNameController, hintText: "Email", icon: Icons.person, obscureText: false,),
               SizedBox(height: Dimensions.height20,),
               AppTextField(
-                controller: _passwordController, hintText: "Enter Password", icon: Icons.password, obscureText: true,),
+                controller: _passwordController, hintText: "Password", icon: Icons.password, obscureText: true,),
               Padding(
                 padding:  EdgeInsets.symmetric(horizontal: Dimensions.height20),
                 child: Row(

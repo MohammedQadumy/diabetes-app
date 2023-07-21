@@ -132,7 +132,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                             color: AppColors.chipBackground
                           ),
                         child: Padding(padding: EdgeInsets.only(left: Dimensions.height10,top: Dimensions.height10),
-                          child: AppColumn(text: "Testtttttttttttttttttttttttttttttttttttttttt"),
+                          child: const AppColumn(text: "Broccoli & Chicken"),
                         ),
                         ),
                       )
