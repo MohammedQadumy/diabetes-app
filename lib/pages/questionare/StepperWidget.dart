@@ -85,7 +85,7 @@ class _StepperWidgetState extends State<StepperWidget> {
 
   Future<String> _questionAndAnswer(String question , String answer) async {
     final response = await http.post(
-      Uri.parse('http://13.51.162.14:8000/api/question/'),
+      Uri.parse('${AppConstants.BASE_URL}/api/question/'),
       headers: <String, String>{
         'Content-Type': 'application/json',
         // 'Authorization': 'Bearer $token',

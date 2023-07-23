@@ -1,3 +1,4 @@
+
 class Meal {
   final int id;
   final String name;
@@ -22,4 +23,5 @@ class Meal {
       calories: json['calories'],
     );
   }
+
 }

@@ -1,16 +1,18 @@
-
-
-
 import 'package:flutter/cupertino.dart';
 
 class AppBigText extends StatelessWidget {
-
   final Color? color;
   final String text;
   double size;
-  TextOverflow overflow ;
+  TextOverflow overflow;
 
-  AppBigText({Key? key, this.color, required this.text,this.overflow=TextOverflow.ellipsis,this.size=20}) : super(key: key);
+  AppBigText(
+      {Key? key,
+      this.color,
+      required this.text,
+      this.overflow = TextOverflow.ellipsis,
+      this.size = 20})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +22,7 @@ class AppBigText extends StatelessWidget {
         overflow: overflow,
         color: color,
         fontSize: size,
-        fontFamily: 'Roboto',
-          fontWeight: FontWeight.w400,
+        fontWeight: FontWeight.w400,
       ),
     );
   }

@@ -1,21 +1,22 @@
 
 
 import '../Models/questions.dart';
-
+import '../Models/User.dart';
 class AppConstants {
-  static const String APP_NAME = "DIABEAT";
-  static const String BASE_URL = "http://13.51.162.14:8000";
-  static const String REGISTRATION_URI = "/api/register/";
-  static const String LOGIN_URI = "/api/login/";
-  static const String MEALS_URI = "/api/meals/";
+  static  String APP_NAME = "DIABEAT";
+  static  String BASE_URL = "http://10.0.2.2:8000";
+  static  String REGISTRATION_URI = "/api/register/";
+  static  String LOGIN_URI = "/api/login/";
+  static  String MEALS_URI = "/api/meals/";
 
 
-  static const String EMAIL = "USER_EMAIL";
-  static const String PASSWORD = "USER_PASSWORD";
+  static  String EMAIL = "USER_EMAIL";
+  static  String PASSWORD = "USER_PASSWORD";
+  static  String NAME = "Default Name";
+  static  const TOP_RATED_MEALS_URI = " ";
+  static  String TOKEN = "";
 
-  static const TOP_RATED_MEALS_URI = " ";
-
-  static const String TOKEN = "";
+  static User currentUser = User(firstName: '', lastName: '', userName: '', password: '', email: '');
 
 
   static const questions = [

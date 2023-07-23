@@ -1,5 +1,6 @@
 
 
+import 'package:diabetes_app/Models/Meal.dart';
 import 'package:diabetes_app/components/app_big_text.dart';
 import 'package:diabetes_app/components/app_button.dart';
 import 'package:diabetes_app/components/app_return_icon_button.dart';
@@ -20,6 +21,7 @@ class TopRatedFoodDetails extends StatefulWidget {
 
 class _TopRatedFoodDetailsState extends State<TopRatedFoodDetails> {
   double  rating = 0 ;
+  Meal ? meal;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,7 +63,7 @@ class _TopRatedFoodDetailsState extends State<TopRatedFoodDetails> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    AppColumn(text: 'Chicken',),
+                    // AppColumn(meal: this.meal, rating: 4),
                     SizedBox(height: Dimensions.height20,),
                     AppBigText(text: "Description"),
                     SizedBox(height: Dimensions.height20,),

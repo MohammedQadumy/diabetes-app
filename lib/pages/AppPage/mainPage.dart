@@ -12,6 +12,7 @@ import 'package:diabetes_app/utils/dimenstions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../utils/app_constants.dart';
 import 'food_page_body.dart';
 
 class MainPage extends StatefulWidget{
@@ -45,8 +46,7 @@ class _MainPageState extends State<MainPage>{
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(children: [
-                  AppBigText(text: "Mohammed"),
-                  AppBigText(text: "Qadumy")
+                  AppBigText(text: "${AppConstants.currentUser.firstName}  ${AppConstants.currentUser.lastName}"),
                 ],
 
                 ),
@@ -60,7 +60,6 @@ class _MainPageState extends State<MainPage>{
                         borderRadius: BorderRadius.circular(Dimensions.radius15),
                         color: AppColors.chipBackground,
                       ),
-
                     ),
                   ),
                   onTap: () {

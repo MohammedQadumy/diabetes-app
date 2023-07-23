@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import '../Models/User.dart';
 import '../Models/response_model.dart';
 
+
 class AuthController extends GetxController implements GetxService {
 
   final AuthRepo authRepo;
@@ -51,18 +52,17 @@ class AuthController extends GetxController implements GetxService {
     _isLoading=true;
     Response response = (await authRepo.login(email,password));
     late ResponseModel responseModel;
-    // print("the tokeeeeeeeeeeeeeeeeen:");
-    print(response.body);
     if(response.statusCode == 200){
       print("controller status is 200");
       authRepo.saveUserToken(response.body["access"]);
       responseModel = ResponseModel(true, response.body["access"]);
+
     }
     else{
-      // print(response.body["token"]);
       print("controller status is not 200");
       responseModel = ResponseModel(false, response.statusText!);
     }
+
 
     _isLoading=true;
     update();

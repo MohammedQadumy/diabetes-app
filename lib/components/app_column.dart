@@ -7,30 +7,38 @@ import 'package:flutter/material.dart';
 import '../utils/colors.dart';
 import '../utils/dimenstions.dart';
 import 'icon_and_text_widget.dart';
+import '../API/Methods.dart';
+import '../Models/Meal.dart';
 
 class AppColumn extends StatelessWidget {
-  final String text;
-
-  const AppColumn({Key? key , required this.text}) : super(key: key);
+  final double rating;
+  final Meal meal;
+  const AppColumn({Key? key , required this.meal, required this.rating}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        AppBigText(text: text,
+        AppBigText(text: meal.name,
           color: AppColors.darkText,
         ),
         SizedBox(height: Dimensions.height10,),
         Row(children: [
-          // wrap widget used to draw things multiple times
-          Wrap(children: List.generate(5, (index) => const Icon(Icons.star , color: AppColors.darkText,)),),
-          SizedBox(width: Dimensions.height10,),
-           AppBigText(color: AppColors.darkText, text: 'rating : 3',)
-          // can add clickable text here
+          Row(
+              children: [
+                Wrap(
+                  children: List.generate(rating.round(), (index) => Icon(Icons.star , color: AppColors.darkText)),
+                ),
+                SizedBox(width: Dimensions.height5,),
+                AppBigText(color: AppColors.darkText, text: 'rating : ${rating.round()}')
+              ]
+          ),
         ],
         ),
-        SizedBox(height: Dimensions.height20,),
+
+
+        SizedBox(height: Dimensions.height5,),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: const [
@@ -43,3 +51,4 @@ class AppColumn extends StatelessWidget {
     );
   }
 }
+
