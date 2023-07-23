@@ -28,10 +28,16 @@ class _FoodPageBodyState extends State<FoodPageBody> {
   double _scaleFactor = 0.8;
   double height = Dimensions.pageViewContainer;
   List<MealWithRating> mealsWithRatings = [];
+  List<MealWithRating> topRatedMeals = [];
 
   @override
   void initState() {
     super.initState();
+    fetchTopRatedMeals().then((mealData) {
+      setState(() {
+        topRatedMeals = mealData;
+      });
+    });
     fetchRecommendations().then((mealData) {
       setState(() {
         mealsWithRatings = mealData;
@@ -57,7 +63,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
             ),
             AppBigText(text: "Top Rated Meals"),
             SizedBox(
-              height: Dimensions.height10,
+              height: Dimensions.height45,
             )
           ],
         ),
@@ -161,7 +167,9 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                                   top: Dimensions.height10),
                               child: AppColumn(
                                   meal: mealsWithRatings[index].meal,
-                                  rating: mealsWithRatings[index].rating),
+                                  rating: mealsWithRatings[index].rating,
+                                  type: mealsWithRatings[index].type,
+                              ),
                             ),
                           ),
                         )
@@ -228,11 +236,12 @@ class _FoodPageBodyState extends State<FoodPageBody> {
             margin: EdgeInsets.only(
                 left: Dimensions.height10, right: Dimensions.height10),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30),
-              image: const DecorationImage(
-                image: AssetImage("assets/images/cezar.png"),
-                fit: BoxFit.cover,
-              ),
+              image: DecorationImage(
+                  image: NetworkImage(
+                      topRatedMeals[index].meal.image),
+                  fit: BoxFit.cover),
+              borderRadius:
+              BorderRadius.circular(Dimensions.radius10),
             ),
           ),
           Align(
@@ -262,8 +271,10 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                     left: Dimensions.height25,
                     right: Dimensions.height10),
                 child: AppColumn(
-                    meal: mealsWithRatings[index].meal,
-                    rating: mealsWithRatings[index].rating),
+                    meal: topRatedMeals[index].meal,
+                    rating: topRatedMeals[index].rating,
+                    type: topRatedMeals[index].type
+                ),
               ),
             ),
           ),

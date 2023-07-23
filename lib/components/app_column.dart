@@ -1,5 +1,3 @@
-
-
 import 'package:diabetes_app/components/app_big_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,42 +11,66 @@ import '../Models/Meal.dart';
 class AppColumn extends StatelessWidget {
   final double rating;
   final Meal meal;
-  const AppColumn({Key? key , required this.meal, required this.rating}) : super(key: key);
+  final String? type;
+
+  const AppColumn(
+      {Key? key, required this.meal, required this.rating, required this.type})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        AppBigText(text: meal.name,
+        AppBigText(
+          text: meal.name,
           color: AppColors.darkText,
         ),
-        SizedBox(height: Dimensions.height10,),
-        Row(children: [
-          Row(
-              children: [
-                Wrap(
-                  children: List.generate(rating.round(), (index) => Icon(Icons.star , color: AppColors.darkText)),
-                ),
-                SizedBox(width: Dimensions.height5,),
-                AppBigText(color: AppColors.darkText, text: 'rating : ${rating.round()}')
-              ]
-          ),
-        ],
+        SizedBox(
+          height: Dimensions.height10,
         ),
-
-
-        SizedBox(height: Dimensions.height5,),
+        Row(
+          children: [
+            Row(children: [
+              AppBigText(color: AppColors.darkText, text: '             '),
+              Wrap(
+                children: List<Widget>.generate(5, (index) {
+                  return Icon(
+                    Icons.star,
+                    color: index < rating.round() ? Colors.black : Colors.grey,
+                  );
+                }),
+              ),
+              SizedBox(
+                width: Dimensions.height5,
+              ),
+            ]),
+          ],
+        ),
+        SizedBox(
+          height: Dimensions.height5,
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: const [
-            MyIconTextWidget(icon: Icons.circle, text: "hot", color: AppColors.nearlyBlack, iconColor: AppColors.darkText),
-            MyIconTextWidget(icon: Icons.food_bank, text: "lunch", color: AppColors.nearlyBlack, iconColor: AppColors.darkText),
-            MyIconTextWidget(icon: Icons.spa, text: "spicy", color: AppColors.nearlyBlack, iconColor: AppColors.darkText),
+          children: [
+            MyIconTextWidget(
+                icon: Icons.circle,
+                text: meal.warm ? "Warm" : "Cold",
+                color: AppColors.nearlyBlack,
+                iconColor: meal.warm ? Colors.red : Colors.blue),
+            MyIconTextWidget(
+                icon: Icons.food_bank,
+                text: "${this.type}",
+                color: AppColors.nearlyBlack,
+                iconColor: AppColors.darkText),
+            MyIconTextWidget(
+                icon: Icons.spa,
+                text: meal.spicy ? "Spicy" : "Mild",
+                color: AppColors.nearlyBlack,
+                iconColor: meal.spicy ? Colors.red : Colors.blue),
           ],
         ),
       ],
     );
   }
 }
-

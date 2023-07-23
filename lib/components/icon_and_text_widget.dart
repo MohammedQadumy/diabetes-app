@@ -22,8 +22,8 @@ class MyIconTextWidget extends StatelessWidget {
       children: [
         AppIcon(icon: this.icon,size: Dimensions.iconSize30,backgroundColor: AppColors.white,iconColor: this.iconColor,),
         SizedBox(width: 5,),
-        Text(text , style: TextStyle(
-          color: this.color
+        Text(text , style: TextStyle(fontSize: 13,
+          color: this.color,
         ),)
       ],
     );

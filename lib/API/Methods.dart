@@ -200,7 +200,7 @@ Future<List<MealWithRating>> fetchRecommendations() async {
   for (MealType type in mealOrder) {
     Meal meal = await fetchMeal(type);
     double rating = await fetchMealRating(meal.id);
-    mealsWithRatings.add(MealWithRating(meal: meal, rating: rating));
+    mealsWithRatings.add(MealWithRating(meal: meal, rating: rating, type: type.toString().split('.').last));
   }
   return mealsWithRatings;
 }
@@ -225,5 +225,33 @@ Future<double> fetchMealRating(int mealId) async {
 
   } else {
     throw Exception('Unexpected error occured!');
+  }
+}
+Future<List<MealWithRating>> fetchTopRatedMeals() async {
+  var url = Uri.parse('${AppConstants.BASE_URL}/api/top-rated');
+
+  final response = await http.get(
+    url,
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer ${AppConstants.TOKEN}',
+    },
+  );
+
+  if (response.statusCode == 200) {
+    List jsonResponse = convert.jsonDecode(convert.utf8.decode(response.bodyBytes));
+    if (jsonResponse.isNotEmpty) {
+      List<MealWithRating> topRatedMeals = [];
+      for (var item in jsonResponse) {
+        Meal meal = Meal.fromJson(item);
+        double rating = await fetchMealRating(meal.id);
+        topRatedMeals.add(MealWithRating(meal: meal, rating: rating, type: "Any"));
+      }
+      return topRatedMeals;
+    } else {
+      throw Exception('No meals returned!');
+    }
+  } else {
+    throw Exception('Unexpected error occurred!');
   }
 }
