@@ -14,6 +14,7 @@ import '../../components/app_column.dart';
 import '../../API/Methods.dart';
 import '../../Models/Meal.dart';
 import '../../Models/MealWithRating.dart';
+import '../../base/show_custom_message.dart';
 
 class FoodPageBody extends StatefulWidget {
   const FoodPageBody({Key? key}) : super(key: key);
@@ -56,31 +57,33 @@ class _FoodPageBodyState extends State<FoodPageBody> {
     return Column(
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
-              width: Dimensions.height20,
-            ),
-            AppBigText(text: "Top Rated Meals"),
-            SizedBox(
-              height: Dimensions.height45,
-            )
+            AppBigText(text: "أشهر الوجبات", size: 32,),
           ],
         ),
+        SizedBox(
+          height: Dimensions.height20,
+        ),
+
         InkWell(
           child: Container(
             height:
                 Dimensions.pageViewContainer + Dimensions.pageViewTextContainer,
             child: PageView.builder(
                 controller: pageController,
-                itemCount: 5,
+                itemCount: topRatedMeals.isEmpty ? 1 : 5,
                 itemBuilder: (context, position) {
+                  if (topRatedMeals.isEmpty) {
+                    return Center(child: CircularProgressIndicator());
+                  }
                   return _buildPageItem(position);
                 }),
           ),
           onTap: () {
+            var currentMeal = topRatedMeals[_currentPage.round()];
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => TopRatedFoodDetails()));
+                MaterialPageRoute(builder: (BuildContext context) => TopRatedFoodDetails(meal: currentMeal.meal)));
           },
         ),
         DotsIndicator(
@@ -102,7 +105,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              AppBigText(text: "Meals Today"),
+              AppBigText(text: "وجبات اليوم",size: 26,),
               SizedBox(
                 width: Dimensions.height10,
               ),
@@ -116,7 +119,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
               SizedBox(
                 width: Dimensions.height10,
               ),
-              GestureDetector(onTap: null, child: AppBigText(text: "new plan")),
+              GestureDetector(onTap: null, child: AppBigText(text: "جدول جديد",size: 26)),
               SizedBox(
                 width: Dimensions.height10,
               )
@@ -127,8 +130,11 @@ class _FoodPageBodyState extends State<FoodPageBody> {
           height: 900,
           child: ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: 5,
+              itemCount: mealsWithRatings.isEmpty ? 1 : 5,
               itemBuilder: (context, index) {
+                if (mealsWithRatings.isEmpty) {
+                  return Center(child: CircularProgressIndicator());
+                }
                 return GestureDetector(
                   child: Container(
                     margin: EdgeInsets.only(
@@ -180,7 +186,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => TopRatedFoodDetails()));
+                            builder: (BuildContext context) => TopRatedFoodDetails(meal: mealsWithRatings[index].meal)));
                   },
                 );
               }),

@@ -9,19 +9,30 @@ import 'package:diabetes_app/utils/colors.dart';
 import 'package:diabetes_app/utils/dimenstions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-
+import '../../Models/Item.dart';
 import '../../components/app_column.dart';
+import '../../API/Methods.dart';
 
 class TopRatedFoodDetails extends StatefulWidget {
-  const TopRatedFoodDetails({Key? key}) : super(key: key);
-
+  final Meal meal;
+  const TopRatedFoodDetails(
+      {Key? key, required this.meal})
+      : super(key: key);
   @override
   State<TopRatedFoodDetails> createState() => _TopRatedFoodDetailsState();
 }
 
 class _TopRatedFoodDetailsState extends State<TopRatedFoodDetails> {
+
+
+  late Future<List<Item>> futureItems;
+  @override
+  void initState() {
+    super.initState();
+    futureItems = fetchItems(widget.meal.id);
+  }
+
   double  rating = 0 ;
-  Meal ? meal;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,10 +45,13 @@ class _TopRatedFoodDetailsState extends State<TopRatedFoodDetails> {
               child: Container(
                 width: double.maxFinite,
                 height: Dimensions.detailsImageHeight,
-                decoration:  BoxDecoration(image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: AssetImage("assets/images/test.jpg")
-                )
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: NetworkImage(
+                          widget.meal.image),
+                      fit: BoxFit.cover),
+                  borderRadius:
+                  BorderRadius.circular(Dimensions.radius10),
                 ),
               )
           ),
@@ -60,38 +74,47 @@ class _TopRatedFoodDetailsState extends State<TopRatedFoodDetails> {
                     borderRadius: BorderRadius.only(topRight:Radius.circular(Dimensions.radius20),topLeft:Radius.circular(Dimensions.radius20)),
                     color: Colors.white
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // AppColumn(meal: this.meal, rating: 4),
-                    SizedBox(height: Dimensions.height20,),
-                    AppBigText(text: "Description"),
-                    SizedBox(height: Dimensions.height20,),
-                    const Expanded(
-                      child: SingleChildScrollView(
-                        child: ExpandableTextWidget(text: "This peri peri chicken is made with my take on African peri peri sauce using fresh and dried chiles."
-                            " The marinade is incredibly flavorful and gives the chicken a beautiful color as well." +""
-                            "The marinade is incredibly flavorful and gives the chicken a beautiful color as well."
-                            "The marinade is incredibly flavorful and gives the chicken a beautiful color as well."
-                            "The marinade is incredibly flavorful and gives the chicken a beautiful color as well."
-                            "The marinade is incredibly flavorful and gives the chicken a beautiful color as well."
-                            "The marinade is incredibly flavorful and gives the chicken a beautiful color as well."
-                            "The marinade is incredibly flavorful and gives the chicken a beautiful color as well."
-                            "The marinade is incredibly flavorful and gives the chicken a beautiful color as well."
-                            "The marinade is incredibly flavorful and gives the chicken a beautiful color as well."
-                            "The marinade is incredibly flavorful and gives the chicken a beautiful color as well."
-                            "The marinade is incredibly flavorful and gives the chicken a beautiful color as well."
-                            "The marinade is incredibly flavorful and gives the chicken a beautiful color as well."
-                            "The marinade is incredibly flavorful and gives the chicken a beautiful color as well."
-                            "The marinade is incredibly flavorful and gives the chicken a beautiful color as well."
-                            "The marinade is incredibly flavorful and gives the chicken a beautiful color as well."
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // AppColumn(meal: this.meal, rating: 4),
+                      SizedBox(height: Dimensions.height20,),
+                      AppBigText(text: "وصف الوجبة", size: 30,),
+                      SizedBox(height: Dimensions.height20,),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Directionality(
+                          textDirection: TextDirection.rtl,
+                          child: ExpandableTextWidget(text: "${widget.meal.description}"),
                         ),
                       ),
-                    ),
-
-                  ],
+                      AppBigText(text: "المكونات", size: 30,),
+                      FutureBuilder<List<Item>>(
+                        future: futureItems,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return Column(
+                              children: snapshot.data!.map((item) =>
+                                  ListTile(
+                                    title: Text(item.itemName),
+                                    trailing: Text('${item.weight.toString()}غم'),
+                                  )
+                              ).toList(),
+                            );
+                          } else if (snapshot.hasError) {
+                            return Text("${snapshot.error}");
+                          }
+                          // By default, show a loading spinner.
+                          return Center(child: CircularProgressIndicator());
+                        },
+                      ),
+                      // add more widgets as needed
+                    ],
+                  ),
                 ),
               )
+
           )
           // expanded text
         ],
@@ -111,13 +134,33 @@ class _TopRatedFoodDetailsState extends State<TopRatedFoodDetails> {
           child:Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              GestureDetector(child: AppButton(text: "Rate this Meal",textColor: Colors.white,height: 50,) ,
-                onTap:() => showRating(),),
-              GestureDetector(
-                child: AppButton(text: "Add to my counter",textColor: Colors.white,height: 50,)
-              )
+              Expanded(
+                child: GestureDetector(
+                  child: AppButton(
+                    text: "تقييم",
+                    textColor: Colors.white,
+                    height: 50,
+                    fontSize: 20,
+
+                  ),
+                  onTap: () => showRating(),
+                ),
+              ),
+              Expanded(
+                child: GestureDetector(
+                  child: AppButton(
+                    text: "أضف إلى وجباتي",
+                    textColor: Colors.white,
+                    height: 50,
+                    fontSize: 20,
+
+
+                  ),
+                ),
+              ),
             ],
           ),
+
         ),
       ),
     );
@@ -128,12 +171,12 @@ class _TopRatedFoodDetailsState extends State<TopRatedFoodDetails> {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          AppBigText(text: "Leave a Rating"),
+          AppBigText(text: "اترك تقييما للوجبة"),
           buildRating(),
         ],
       ),
       actions: [
-        TextButton(onPressed: ()=> Navigator.pop(context), child: AppBigText(text: "Rate" , color: AppColors.nearlyBlack,))
+        TextButton(onPressed: ()=> Navigator.pop(context), child: AppBigText(text: "تقييم" , color: AppColors.nearlyBlack, size: 28,))
       ],
     )
     );

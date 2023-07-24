@@ -153,6 +153,9 @@ class _SignInStateClass extends State<SignInWidget> {
                 child: AppButton(
                   text: "Sign In",
                   width: Dimensions.screenWidth / 1.5,
+                  fontSize: 25,
+                  borderRadius: BorderRadius.circular(12),
+                  borderSize: 10,
                 )),
           ],
         ),

@@ -33,7 +33,8 @@ class AppBigText extends StatelessWidget {
           color: color,
           fontSize: size,
           fontWeight: FontWeight.w400,
-          fontFamily: fontFamily
+          fontFamily: fontFamily,
+
         ),
       ),
     );

@@ -12,39 +12,52 @@ class AppButton extends StatelessWidget {
   IconData? icon ;
   double? width = Dimensions.screenWidth/2 ;
   double? height;
+  final double fontSize;
 
 
+  final BorderRadius borderRadius;
+  final double borderSize;
 
-   AppButton({Key? key , required this.text ,
+  AppButton({
+    Key? key,
+    required this.text,
     this.textColor = AppColors.white,
     this.backgroundColor = AppColors.nearlyBlack,
-     this.borderColor ,
-     this.width ,
-     this.height,
-     this.icon
-  }
-      ) : super(key: key);
+    this.borderColor,
+    this.width,
+    this.height,
+    this.icon,
+    this.borderRadius = BorderRadius.zero,
+    this.fontSize = 15,
+    this.borderSize = 0
+  }) : super(key: key);
 
 
   @override
   Widget build(BuildContext context) {
+    final arabicRegex = RegExp(r'[\u0600-\u06FF]');
+
+    String fontFamily;
+    if (arabicRegex.hasMatch(text)) {
+      fontFamily = 'Arabic';
+    } else {
+      fontFamily = 'Lato';
+    }
     return Container(
       margin: EdgeInsets.all(Dimensions.height5),
-      padding: EdgeInsets.all(Dimensions.height10),
       width: width,
       height: height,
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(Dimensions.height10),
-        border: Border.all(
-          // color: borderColor,
-          width: 1,
-          color: backgroundColor
-        ),
+      decoration: BoxDecoration(
+        borderRadius: borderRadius,
+        border: Border.all(width: borderSize, color: backgroundColor),
+
         color: backgroundColor,
       ),
       child: Center(
         child: Text(text , style: TextStyle(
         color: textColor,
-          fontFamily: 'Roboto'
+          fontFamily: fontFamily,
+            fontSize: fontSize
         )
         ),
       ),

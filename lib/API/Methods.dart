@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:diabetes_app/Models/User.dart';
 import 'package:diabetes_app/utils/app_constants.dart';
 import '../Models/Meal.dart';
+import '../Models/Item.dart';
 import '../Models/MealWithRating.dart';
 import 'dart:convert' as convert;
 import 'dart:math';
@@ -253,5 +254,17 @@ Future<List<MealWithRating>> fetchTopRatedMeals() async {
     }
   } else {
     throw Exception('Unexpected error occurred!');
+  }
+}
+
+
+Future<List<Item>> fetchItems(int mealId) async {
+  final response = await http.get(Uri.parse('${AppConstants.BASE_URL}/api/meal_items/$mealId'));
+
+  if (response.statusCode == 200) {
+    List jsonResponse = json.decode(response.body);
+    return jsonResponse.map((item) => new Item.fromJson(item)).toList();
+  } else {
+    throw Exception('Failed to load items');
   }
 }

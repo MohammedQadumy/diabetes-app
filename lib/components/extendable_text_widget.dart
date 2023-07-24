@@ -13,7 +13,6 @@ class ExpandableTextWidget extends StatefulWidget {
   @override
   State<ExpandableTextWidget> createState() => _ExpandableTextWidgetState();
 }
-
 class _ExpandableTextWidgetState extends State<ExpandableTextWidget> {
 
   late String firstHalf;
@@ -32,27 +31,48 @@ class _ExpandableTextWidgetState extends State<ExpandableTextWidget> {
       firstHalf = widget.text;
       secondHalf = "";
     }
-
-
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: secondHalf.isEmpty?Text(firstHalf):Column(
+      child: secondHalf.isEmpty
+          ? Text(
+        firstHalf,
+        textDirection: TextDirection.rtl,
+        style: TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.w200,
+            fontFamily: 'Arabic'
+        ),
+      )
+          : Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(hiddenText?(firstHalf+"..."):(firstHalf + secondHalf)),
+          Text(
+            hiddenText ? (firstHalf + "...") : (firstHalf + secondHalf),
+            textDirection: TextDirection.rtl,
+
+          ),
           InkWell(
-            onTap: (){
-                setState(() {
-                  hiddenText=!hiddenText;
-                });
+            onTap: () {
+              setState(() {
+                hiddenText = !hiddenText;
+              });
             },
             child: Row(
-             children:  [
-               hiddenText?Text("Show more"):Text("Show less"),
-               Icon(hiddenText?Icons.arrow_drop_down:Icons.arrow_drop_up),
-             ],
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  hiddenText ? "أظهر المزيد" : "أظهر أقل",
+                  textDirection: TextDirection.rtl,
+                ),
+                Icon(
+                  hiddenText
+                      ? Icons.arrow_drop_down
+                      : Icons.arrow_drop_up,
+                ),
+              ],
             ),
           )
         ],
