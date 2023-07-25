@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:diabetes_app/Models/Ingredient.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-
+import '../../base/show_custom_message.dart';
 import '../../Models/Meal.dart';
 import '../../utils/colors.dart';
 import '../../Models/ItemSearch.dart';
@@ -30,8 +30,7 @@ class _NewMealPageState extends State<NewMealPage> {
   TextEditingController mealNameController = TextEditingController();
   TextEditingController mealDescriptionController = TextEditingController();
   TextEditingController mealImageController = TextEditingController();
-  TextEditingController mealCaloriesController = TextEditingController();
-
+  Meal? newMeal;
   bool mealWarm = false;
   bool mealSpicy = false;
   ItemSearch? selectedIngredient;
@@ -79,7 +78,8 @@ class _NewMealPageState extends State<NewMealPage> {
                 height: Dimensions.height20,
               ),
               AppBigText(
-                text: "Select ingredient",
+                text: "ابحث عن مكون",
+                size: 25,
               ),
               SizedBox(height: 10.0),
               Container(
@@ -126,7 +126,8 @@ class _NewMealPageState extends State<NewMealPage> {
               ),
               SizedBox(height: 20.0),
               AppBigText(
-                text: "Portion",
+                text: "الكمية",
+                size: 25,
               ),
               SizedBox(height: 10.0),
               Row(
@@ -152,8 +153,9 @@ class _NewMealPageState extends State<NewMealPage> {
                     width: Dimensions.height10,
                   ),
                   Text(
-                    "weight in gm",
+                    "الوزن بال(غم)",
                     style: TextStyle(
+                        fontSize: 18,
                         color: AppColors.nearlyBlack.withOpacity(0.5)),
                   )
                 ],
@@ -167,23 +169,25 @@ class _NewMealPageState extends State<NewMealPage> {
                 onTap: () {
                   String newIngredientPortion = IngredientPortion.text;
                   if (selectedIngredient != null) {
-                    // Add this check
+                    double? ingredientCalories = selectedIngredient?.cal ?? 0.0;
                     Ingredient newIngredient = Ingredient(
                         selectedIngredient!.itemID,
                         selectedIngredient!.itemName,
-                        newIngredientPortion); // Use id and itemName properties
+                        newIngredientPortion,
+                        ingredientCalories
+                    );
                     setState(() {
                       AddedIngredients.add(newIngredient);
                     });
                   } else {
                     // Handle the case where no ingredient has been selected
-                    print("No ingredient selected");
+                    print("لم يتم اختيار أي مكون");
                   }
                 },
               ),
               SizedBox(height: 10.0),
               AddedIngredients.length == 0
-                  ? AppBigText(text: "No Ingredient Added")
+                  ? AppBigText(text: "لم يتم اختيار مكون", color: Colors.black54)
                   : Wrap(
                       spacing: 8.0,
                       runSpacing: 4.0,
@@ -203,7 +207,7 @@ class _NewMealPageState extends State<NewMealPage> {
                 margin: EdgeInsets.symmetric(vertical: Dimensions.height20),
                 child: TextField(
                   decoration: InputDecoration(
-                      hintText: "Name your meal",
+                      hintText: "اسم الوجبة",
                       border: OutlineInputBorder(
                         borderRadius:
                             BorderRadius.circular(Dimensions.radius10),
@@ -215,7 +219,7 @@ class _NewMealPageState extends State<NewMealPage> {
                 margin: EdgeInsets.symmetric(vertical: Dimensions.height20),
                 child: TextField(
                   decoration: InputDecoration(
-                    hintText: "Describe your meal",
+                    hintText: "وصف الوجبة",
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(Dimensions.radius10),
                     ),
@@ -230,28 +234,15 @@ class _NewMealPageState extends State<NewMealPage> {
                     style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.all(AppColors.nearlyBlack)),
-                    child: Text("Select Image"),
+                    child: Text("اختر صورة", style: TextStyle(fontSize: 18),),
                     onPressed: () {
                       pickImage();
                     },
                   ),
                 ),
               ),
-              Container(
-                margin: EdgeInsets.symmetric(vertical: Dimensions.height20),
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: "Calories in your meal",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(Dimensions.radius10),
-                    ),
-                  ),
-                  controller: mealCaloriesController,
-                  keyboardType: TextInputType.number,
-                ),
-              ),
               SwitchListTile(
-                title: const Text('Is the meal warm?'),
+                title: const Text('هل الوجبة حارة؟'),
                 value: mealWarm,
                 onChanged: (bool value) {
                   setState(() {
@@ -260,7 +251,7 @@ class _NewMealPageState extends State<NewMealPage> {
                 },
               ),
               SwitchListTile(
-                title: const Text('Is the meal spicy?'),
+                title: const Text('هل الوجبة كثيرة التاوبل؟'),
                 value: mealSpicy,
                 onChanged: (bool value) {
                   setState(() {
@@ -276,16 +267,20 @@ class _NewMealPageState extends State<NewMealPage> {
                   ),
                 ),
                 onTap: () async {
-                  Meal newMeal = Meal(
+                  double calories = 0;
+                  AddedIngredients.forEach((ingredient){
+                    calories = calories + ingredient.cal;
+                  });
+                   newMeal = Meal(
                     id: 0,
                     name: mealNameController.text,
                     description: mealDescriptionController.text,
                     image: mealImageController.text,
-                    calories: int.parse(mealCaloriesController.text),
+                    calories: calories.toInt(),
                     warm: mealWarm,
                     spicy: mealSpicy,
                   );
-                  int newMealId = await createMeal(newMeal);
+                  int newMealId = await createMeal(newMeal!);
                   print(newMealId);
                   AddedIngredients.forEach((ingredient) async {
                     print('==============');
@@ -296,13 +291,10 @@ class _NewMealPageState extends State<NewMealPage> {
                     await postMealItem(newMealId, ingredient.id, double.parse(ingredient.portion));
 
                   });
+                  showCustomSnackBar("ثم إضافة الوجبة", title: "تم");
                 },
               ),
-              SizedBox(height: 20.0),
-              AppBigText(
-                text: "Meal Nutrition Values",
-              ),
-              NewMealCounter(),
+
             ],
           ),
         ),

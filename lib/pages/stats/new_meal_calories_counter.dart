@@ -4,11 +4,14 @@ import 'dart:math' as math;
 
 import '../../utils/app_theme.dart';
 import '../../utils/colors.dart';
+import '../../Models/Meal.dart';
 
 class NewMealCounter extends StatelessWidget {
+  Meal? meal;
 
-  const NewMealCounter(
-      {Key? key})
+  NewMealCounter(
+      {Key? key,
+         this.meal})
       : super(key: key);
 
   @override
@@ -100,7 +103,7 @@ class NewMealCounter extends StatelessWidget {
                                               const EdgeInsets.only(
                                                   left: 4, bottom: 3),
                                               child: Text(
-                                                '${(1127).toInt()}',
+                                                "${meal!.calories}",
                                                 textAlign: TextAlign.center,
                                                 style: const TextStyle(
                                                   fontFamily:
