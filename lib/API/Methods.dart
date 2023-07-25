@@ -23,12 +23,11 @@ Future<User> fetchUser() async {
     } else {
       throw Exception('Failed to load user');
     }
-  } catch(e) {
+  } catch (e) {
     print('Failed to fetch user: $e');
     throw Exception('Failed to fetch user: $e');
   }
 }
-
 
 Future<Map<String, dynamic>> loginUser(String email, String password) async {
   var url = Uri.parse('${AppConstants.BASE_URL}/api/login/');
@@ -55,7 +54,6 @@ Future<Map<String, dynamic>> loginUser(String email, String password) async {
 
     AppConstants.currentUser = await fetchUser();
     result['message'] = 'Login successful. Token saved.';
-
   } else {
     var errorData = jsonDecode(response.body);
     print('Login failed. Status code: ${errorData['message']}');
@@ -84,8 +82,6 @@ Future<void> updateUser(Map<String, dynamic> updates) async {
   }
 }
 
-
-
 Future<void> updateWeight(int weight) async {
   var url = Uri.parse('${AppConstants.BASE_URL}/api/answers/update/');
 
@@ -108,10 +104,10 @@ Future<void> updateWeight(int weight) async {
   if (response.statusCode == 204) {
     print('Height and weight update successful.');
   } else {
-    print('Height and weight update failed. Status code: ${response.statusCode}');
+    print(
+        'Height and weight update failed. Status code: ${response.statusCode}');
   }
 }
-
 
 Future<void> updateHeight(int height) async {
   var url = Uri.parse('${AppConstants.BASE_URL}/api/answers/update/');
@@ -135,10 +131,10 @@ Future<void> updateHeight(int height) async {
   if (response.statusCode == 204) {
     print('Height and weight update successful.');
   } else {
-    print('Height and weight update failed. Status code: ${response.statusCode}');
+    print(
+        'Height and weight update failed. Status code: ${response.statusCode}');
   }
 }
-
 
 Future<void> changePassword(String newPassword) async {
   var url = Uri.parse('${AppConstants.BASE_URL}/api/change-password/');
@@ -161,12 +157,12 @@ Future<void> changePassword(String newPassword) async {
   }
 }
 
-
 enum MealType { breakfast, lunch, snack, dinner }
 
 Future<Meal> fetchMeal(MealType type) async {
   String mealTypeString = type.toString().split('.').last;
-  var url = Uri.parse('${AppConstants.BASE_URL}/api/recommendations/$mealTypeString');
+  var url =
+      Uri.parse('${AppConstants.BASE_URL}/api/recommendations/$mealTypeString');
 
   final response = await http.get(
     url,
@@ -177,7 +173,8 @@ Future<Meal> fetchMeal(MealType type) async {
   );
 
   if (response.statusCode == 200) {
-    List jsonResponse = convert.jsonDecode(convert.utf8.decode(response.bodyBytes));
+    List jsonResponse =
+        convert.jsonDecode(convert.utf8.decode(response.bodyBytes));
     print(jsonResponse);
     // Assumes that the response is a list of meals
     if (jsonResponse.isNotEmpty) {
@@ -192,22 +189,24 @@ Future<Meal> fetchMeal(MealType type) async {
   }
 }
 
-
-
 Future<List<MealWithRating>> fetchRecommendations() async {
   List<MealWithRating> mealsWithRatings = [];
-  List<MealType> mealOrder = [MealType.breakfast, MealType.snack, MealType.lunch, MealType.snack, MealType.dinner];
+  List<MealType> mealOrder = [
+    MealType.breakfast,
+    MealType.snack,
+    MealType.lunch,
+    MealType.snack,
+    MealType.dinner
+  ];
 
   for (MealType type in mealOrder) {
     Meal meal = await fetchMeal(type);
     double rating = await fetchMealRating(meal.id);
-    mealsWithRatings.add(MealWithRating(meal: meal, rating: rating, type: type.toString().split('.').last));
+    mealsWithRatings.add(MealWithRating(
+        meal: meal, rating: rating, type: type.toString().split('.').last));
   }
   return mealsWithRatings;
 }
-
-
-
 
 Future<double> fetchMealRating(int mealId) async {
   var url = Uri.parse('${AppConstants.BASE_URL}/api/average-rating/$mealId/');
@@ -223,11 +222,11 @@ Future<double> fetchMealRating(int mealId) async {
   if (response.statusCode == 200) {
     Map<String, dynamic> jsonResponse = json.decode(response.body);
     return jsonResponse['average_rating'] ?? 0.0;
-
   } else {
     throw Exception('Unexpected error occured!');
   }
 }
+
 Future<List<MealWithRating>> fetchTopRatedMeals() async {
   var url = Uri.parse('${AppConstants.BASE_URL}/api/top-rated');
 
@@ -240,13 +239,15 @@ Future<List<MealWithRating>> fetchTopRatedMeals() async {
   );
 
   if (response.statusCode == 200) {
-    List jsonResponse = convert.jsonDecode(convert.utf8.decode(response.bodyBytes));
+    List jsonResponse =
+        convert.jsonDecode(convert.utf8.decode(response.bodyBytes));
     if (jsonResponse.isNotEmpty) {
       List<MealWithRating> topRatedMeals = [];
       for (var item in jsonResponse) {
         Meal meal = Meal.fromJson(item);
         double rating = await fetchMealRating(meal.id);
-        topRatedMeals.add(MealWithRating(meal: meal, rating: rating, type: "Any"));
+        topRatedMeals
+            .add(MealWithRating(meal: meal, rating: rating, type: "Any"));
       }
       return topRatedMeals;
     } else {
@@ -257,9 +258,9 @@ Future<List<MealWithRating>> fetchTopRatedMeals() async {
   }
 }
 
-
 Future<List<Item>> fetchItems(int mealId) async {
-  final response = await http.get(Uri.parse('${AppConstants.BASE_URL}/api/meal_items/$mealId'));
+  final response = await http
+      .get(Uri.parse('${AppConstants.BASE_URL}/api/meal_items/$mealId'));
 
   if (response.statusCode == 200) {
     List jsonResponse = json.decode(response.body);
@@ -267,4 +268,72 @@ Future<List<Item>> fetchItems(int mealId) async {
   } else {
     throw Exception('Failed to load items');
   }
+}
+
+Future<void> reportConsumedMeal(int mealId) async {
+  final response = await http.post(
+    Uri.parse('${AppConstants.BASE_URL}/api/consumed/'),
+    // Replace with your server URL
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer ${AppConstants.TOKEN}',
+      // Replace with user's token
+    },
+    body: jsonEncode(<String, String>{
+      'meal_id': mealId.toString(),
+    }),
+  );
+
+  if (response.statusCode == 200) {
+    print('Meal consumption reported successfully');
+  } else {
+    throw Exception('Failed to report meal consumption');
+  }
+}
+
+Future<List<Meal>> fetchConsumedMeals() async {
+  final response =
+  await http.get(
+    Uri.parse('${AppConstants.BASE_URL}/api/consumed_meals/'),
+    headers: <String, String>{
+      'Authorization': 'Bearer ${AppConstants.TOKEN}',
+    },
+  );
+
+  if (response.statusCode == 200) {
+    List<dynamic> body = convert.jsonDecode(convert.utf8.decode(response.bodyBytes))['consumed_meals'];
+    List<Meal> meals = [];
+    for (int id in body) {
+      final mealResponse =
+      await http.get(
+        Uri.parse('${AppConstants.BASE_URL}/api/meals/$id/'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ${AppConstants.TOKEN}',
+        },
+
+      );
+      if (mealResponse.statusCode == 200) {
+        meals.add(Meal.fromJson(convert.jsonDecode(convert.utf8.decode(mealResponse.bodyBytes))));
+      }
+    }
+    return meals;
+  } else {
+    throw Exception('Failed to load consumed meals');
+  }
+}
+
+
+
+Future<http.Response> deleteMeal(int mealId) {
+  return http.delete(
+    Uri.parse('${AppConstants.BASE_URL}/api/consumed_meals/delete/'),  //replace with your API URL
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer ${AppConstants.TOKEN}',
+    },
+    body: jsonEncode(<String, String>{
+      'meal_id': mealId.toString(),
+    }),
+  );
 }

@@ -30,7 +30,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
   double height = Dimensions.pageViewContainer;
   List<MealWithRating> mealsWithRatings = [];
   List<MealWithRating> topRatedMeals = [];
-
+  bool _isLoading = false;
   @override
   void initState() {
     super.initState();
@@ -82,9 +82,17 @@ class _FoodPageBodyState extends State<FoodPageBody> {
           ),
           onTap: () {
             var currentMeal = topRatedMeals[_currentPage.round()];
-            Navigator.push(context,
-                MaterialPageRoute(builder: (BuildContext context) => TopRatedFoodDetails(meal: currentMeal.meal)));
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (BuildContext context) => TopRatedFoodDetails(
+                  meal: currentMeal,
+                  onMealConsumed: (_) {}, // empty function, add your logic here if needed
+                ),
+              ),
+            );
           },
+
         ),
         DotsIndicator(
           dotsCount: 5,
@@ -119,7 +127,20 @@ class _FoodPageBodyState extends State<FoodPageBody> {
               SizedBox(
                 width: Dimensions.height10,
               ),
-              GestureDetector(onTap: null, child: AppBigText(text: "جدول جديد",size: 26)),
+              GestureDetector(
+                onTap: () async {
+                  setState(() {
+                    _isLoading = true; // set to true before fetching
+                  });
+                  var newMeals = await fetchRecommendations();
+                  setState(() {
+                    mealsWithRatings = newMeals;
+                    _isLoading = false; // set to false after fetching
+                  });
+                },
+                child: AppBigText(text: "جدول جديد",size: 26),
+              ),
+
               SizedBox(
                 width: Dimensions.height10,
               )
@@ -128,7 +149,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
         ),
         Container(
           height: 900,
-          child: ListView.builder(
+          child: _isLoading ? Center(child: CircularProgressIndicator()): ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               itemCount: mealsWithRatings.isEmpty ? 1 : 5,
               itemBuilder: (context, index) {
@@ -184,10 +205,21 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                   ),
                   onTap: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (BuildContext context) => TopRatedFoodDetails(meal: mealsWithRatings[index].meal)));
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) => TopRatedFoodDetails(
+                            meal: mealsWithRatings[index],
+                            onMealConsumed: (mealWithRating) {
+                              setState(() {
+                                // find the meal in the list and update its state
+                                var index = mealsWithRatings.indexWhere((m) => m.meal.id == mealWithRating.meal.id);
+                                if (index != -1) mealsWithRatings[index].isConsumed = true;
+                              });
+                            }),
+                      ),
+                    );
                   },
+
                 );
               }),
         ),

@@ -10,26 +10,29 @@ import 'package:diabetes_app/utils/dimenstions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../../Models/Item.dart';
+import '../../Models/MealWithRating.dart';
 import '../../components/app_column.dart';
 import '../../API/Methods.dart';
 
 class TopRatedFoodDetails extends StatefulWidget {
-  final Meal meal;
-  const TopRatedFoodDetails(
-      {Key? key, required this.meal})
-      : super(key: key);
+  final MealWithRating meal;
+  final Function(MealWithRating) onMealConsumed;
+
+  TopRatedFoodDetails({required this.meal, required this.onMealConsumed});
+
   @override
-  State<TopRatedFoodDetails> createState() => _TopRatedFoodDetailsState();
+  _TopRatedFoodDetailsState createState() => _TopRatedFoodDetailsState();
 }
 
 class _TopRatedFoodDetailsState extends State<TopRatedFoodDetails> {
+  bool isConsumed = false;
 
 
   late Future<List<Item>> futureItems;
   @override
   void initState() {
     super.initState();
-    futureItems = fetchItems(widget.meal.id);
+    futureItems = fetchItems(widget.meal.meal.id);
   }
 
   double  rating = 0 ;
@@ -48,7 +51,7 @@ class _TopRatedFoodDetailsState extends State<TopRatedFoodDetails> {
                 decoration: BoxDecoration(
                   image: DecorationImage(
                       image: NetworkImage(
-                          widget.meal.image),
+                          widget.meal.meal.image),
                       fit: BoxFit.cover),
                   borderRadius:
                   BorderRadius.circular(Dimensions.radius10),
@@ -86,7 +89,7 @@ class _TopRatedFoodDetailsState extends State<TopRatedFoodDetails> {
                         alignment: Alignment.centerRight,
                         child: Directionality(
                           textDirection: TextDirection.rtl,
-                          child: ExpandableTextWidget(text: "${widget.meal.description}"),
+                          child: ExpandableTextWidget(text: "${widget.meal.meal.description}"),
                         ),
                       ),
                       AppBigText(text: "المكونات", size: 30,),
@@ -151,12 +154,21 @@ class _TopRatedFoodDetailsState extends State<TopRatedFoodDetails> {
                   child: AppButton(
                     text: "أضف إلى وجباتي",
                     textColor: Colors.white,
+                    backgroundColor: widget.meal.isConsumed ? Colors.red : AppColors.nearlyBlack,
                     height: 50,
                     fontSize: 20,
-
-
                   ),
+                  onTap: widget.meal.isConsumed ? null : () {
+                    reportConsumedMeal(widget.meal.meal.id);
+                    setState(() {
+                      widget.meal.isConsumed = true;
+                    });
+                  },
                 ),
+
+
+
+
               ),
             ],
           ),
