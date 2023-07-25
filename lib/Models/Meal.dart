@@ -29,5 +29,8 @@ class Meal {
       spicy: json['spicy'] == 1 ? true : false,
     );
   }
-
+  @override
+  String toString() {
+    return 'Meal{id: $id, name: $name, description: $description, image: $image, calories: $calories, warm: $warm, spicy: $spicy}';
+  }
 }

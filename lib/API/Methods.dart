@@ -4,9 +4,12 @@ import 'package:diabetes_app/Models/User.dart';
 import 'package:diabetes_app/utils/app_constants.dart';
 import '../Models/Meal.dart';
 import '../Models/Item.dart';
+import '../Models/ItemSearch.dart';
 import '../Models/MealWithRating.dart';
 import 'dart:convert' as convert;
 import 'dart:math';
+import 'dart:io';
+import 'package:file_picker/file_picker.dart';
 
 Future<User> fetchUser() async {
   try {
@@ -336,4 +339,158 @@ Future<http.Response> deleteMeal(int mealId) {
       'meal_id': mealId.toString(),
     }),
   );
+}
+
+
+void rateMeal(int mealId, int rating) async {
+  // Change this URL to your backend endpoint
+  final url = Uri.parse('${AppConstants.BASE_URL}/api/rate/');
+
+  final response = await http.post(
+    url,
+    headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer ${AppConstants.TOKEN}',
+    },
+    body: json.encode({
+      'meal': mealId,
+      'rating': rating,
+    }),
+  );
+
+  if (response.statusCode == 201) {
+    // Rating was created
+    print('Rating was successfully submitted.');
+  } else {
+    // If the server did not return a 201 CREATED response,
+    // then throw an exception.
+    throw Exception('Failed to submit rating');
+  }
+}
+
+
+
+Future<List<ItemSearch>> fetchAllItems() async {
+
+  final url = Uri.parse('${AppConstants.BASE_URL}/api/items');
+  final response = await http.get(
+    url,
+    headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer ${AppConstants.TOKEN}',
+    },
+  );
+  if (response.statusCode == 200) {
+    List jsonResponse =
+    convert.jsonDecode(convert.utf8.decode(response.bodyBytes));
+    return jsonResponse.map((item) => new ItemSearch.fromJson(item)).toList();
+  } else {
+    throw Exception('Failed to load items');
+  }
+}
+
+Future<int> getNextMealId() async {
+  final response = await http.get(
+    Uri.parse('${AppConstants.BASE_URL}/api/meals/'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer ${AppConstants.TOKEN}',
+    },
+  );
+
+  if (response.statusCode == 200) {
+    final List<dynamic> meals = jsonDecode(response.body);
+    if (meals.isNotEmpty) {
+      final maxIdMeal = meals.reduce((curr, next) => curr['meal_id'] > next['meal_id'] ? curr : next);
+      return maxIdMeal['meal_id'] + 1;
+    } else {
+      return 1;
+    }
+  } else {
+    throw Exception('Failed to load meals');
+  }
+}
+
+Future<int> createMeal(Meal meal) async {
+  final url = Uri.parse('${AppConstants.BASE_URL}/api/meals/');
+  final mealId = await getNextMealId();
+
+  var request = http.MultipartRequest('POST', url);
+
+  request.headers.addAll(<String, String>{
+    'Authorization': 'Bearer ${AppConstants.TOKEN}',
+  });
+
+  request.fields['meal_id'] = mealId.toString();
+  request.fields['meal_name'] = meal.name;
+  request.fields['meal_des'] = meal.description;
+  request.fields['snack'] = "1";
+  request.fields['breakfast'] = "1";
+  request.fields['lunch'] = "1";
+  request.fields['dinner'] = "1";
+  request.fields['warm'] = meal.warm ? "1" : "0";
+  request.fields['hard'] = "1";
+  request.fields['salty'] = "1";
+  request.fields['sweety'] = "1";
+  request.fields['spicy'] = meal.spicy ? "1" : "0";
+  request.fields['vegan'] = "1";
+  request.fields['calories'] = meal.calories.toString();
+
+  if (_file != null) {
+    request.files.add(await http.MultipartFile.fromPath('image', _file!.path));
+  }
+
+  var response = await request.send();
+
+  if (response.statusCode == 201) {
+    final responseBody = await response.stream.bytesToString();
+    return jsonDecode(responseBody)['meal_id'];
+  } else {
+    throw Exception('Failed to create meal');
+  }
+}
+
+
+
+
+File? _file;
+
+Future<void> pickImage() async {
+  FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+  if(result != null) {
+    String? filePath = result.files.single.path;
+    if(filePath != null) {
+      _file = File(filePath);
+    }
+  } else {
+    // User canceled the picker
+  }
+
+}
+
+
+
+
+
+Future<void> postMealItem(int mealId, int itemId, double weight) async {
+  final response = await http.post(
+    Uri.parse('${AppConstants.BASE_URL}/api/save_meal_item/'),
+    // Replace with your server URL
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer ${AppConstants.TOKEN}',
+    },
+    body: jsonEncode(<String, dynamic>{
+      'item_id': itemId,
+      'meal_id': mealId,
+      'weight': weight,
+    }),
+  );
+
+  if (response.statusCode == 200) {
+    print('Added item to the meal');
+  } else {
+    throw Exception('Failed to add item with the meal');
+  }
 }
