@@ -4,6 +4,7 @@ import 'package:diabetes_app/Models/User.dart';
 import 'package:diabetes_app/utils/app_constants.dart';
 import '../Models/Meal.dart';
 import '../Models/Item.dart';
+import '../Models/Intake.dart';
 import '../Models/ItemSearch.dart';
 import '../Models/MealWithRating.dart';
 import 'dart:convert' as convert;
@@ -492,5 +493,155 @@ Future<void> postMealItem(int mealId, int itemId, double weight) async {
     print('Added item to the meal');
   } else {
     throw Exception('Failed to add item with the meal');
+  }
+}
+
+
+
+Future<Intake> fetchIntake() async {
+  var url =
+  Uri.parse('${AppConstants.BASE_URL}/api/daily_calorie_intake');
+
+  final response = await http.get(
+    url,
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer ${AppConstants.TOKEN}',
+    },
+  );
+
+  if (response.statusCode == 200) {
+    Map<String, dynamic> jsonResponse = json.decode(response.body);
+    print(jsonResponse);
+
+    if (jsonResponse.isNotEmpty) {
+      return Intake.fromJson(jsonResponse);
+    } else {
+      throw Exception('No meals returned for this type!');
+    }
+  } else {
+    throw Exception('Unexpected error occurred!');
+  }
+}
+
+
+Future<double> fetchTotalProtein() async {
+  var url = Uri.parse('${AppConstants.BASE_URL}/api/consumed_meals_protein');
+  try {
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer ${AppConstants.TOKEN}',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final responseData = json.decode(response.body);
+      return responseData['total_protein'] as double;
+    } else {
+      throw Exception('Failed to fetch total protein');
+    }
+  } catch (e) {
+    throw Exception('Unexpected error occurred');
+  }
+}
+
+
+
+Future<double> fetchTotalCarbs() async {
+  var url = Uri.parse('${AppConstants.BASE_URL}/api/consumed_meals_carbs');
+  try {
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer ${AppConstants.TOKEN}',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final responseData = json.decode(response.body);
+      return responseData['total_carbs'] as double;
+    } else {
+      throw Exception('Failed to fetch total Carbs');
+    }
+  } catch (e) {
+    throw Exception('Unexpected error occurred');
+  }
+}
+
+
+Future<double> fetchTotalFat() async {
+  var url = Uri.parse('${AppConstants.BASE_URL}/api/consumed_meals_fat');
+  try {
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer ${AppConstants.TOKEN}',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final responseData = json.decode(response.body);
+      return responseData['total_fat'] as double;
+    } else {
+      throw Exception('Failed to fetch total Fat');
+    }
+  } catch (e) {
+    throw Exception('Unexpected error occurred');
+  }
+}
+
+
+Future<Map<String, double>> fetchWeightAndHeight() async {
+  var url = Uri.parse('${AppConstants.BASE_URL}/api/height-weight/');
+  try {
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer ${AppConstants.TOKEN}',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final responseData = json.decode(response.body);
+      double weight = double.parse(responseData['weight']);
+      double height = double.parse(responseData['height']);
+      return {'weight': weight, 'height': height};
+    } else {
+      throw Exception('Failed to fetch weight and height');
+    }
+  } catch (e) {
+    throw Exception('Unexpected error occurred');
+  }
+}
+
+Future<int> fetchBMI() async {
+  var url = Uri.parse('${AppConstants.BASE_URL}/api/bmi');
+  try {
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer ${AppConstants.TOKEN}',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final responseData = json.decode(response.body);
+      if (responseData.containsKey("BMI")) {
+        double bmi = double.parse(responseData["BMI"].toString());
+        return bmi.toInt();
+      } else {
+        throw Exception('BMI data not found in the response');
+      }
+    } else {
+      throw Exception('Failed to fetch BMI');
+    }
+  } catch (e) {
+    throw Exception('Unexpected error occurred');
   }
 }
