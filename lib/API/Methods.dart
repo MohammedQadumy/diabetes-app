@@ -425,9 +425,9 @@ Future<int> createMeal(Meal meal) async {
   request.fields['meal_id'] = mealId.toString();
   request.fields['meal_name'] = meal.name;
   request.fields['meal_des'] = meal.description;
-  request.fields['snack'] = "1";
-  request.fields['breakfast'] = "1";
-  request.fields['lunch'] = "1";
+  request.fields['snack'] = meal.snack ? "1" : "0";
+  request.fields['breakfast'] = meal.breakfast ? "1" : "0";
+  request.fields['lunch'] = meal.lunch ? "1" : "0";
   request.fields['dinner'] = meal.dinner ? "1" : "0";
   request.fields['warm'] = meal.warm ? "1" : "0";
   request.fields['hard'] = "1";

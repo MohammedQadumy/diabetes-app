@@ -8,6 +8,9 @@ class Meal {
   final bool warm;
   final bool spicy;
   final bool dinner;
+  final bool lunch;
+  final bool breakfast;
+  final bool snack;
 
   Meal({
     required this.id,
@@ -18,6 +21,9 @@ class Meal {
     required this.warm,
     required this.spicy,
     required this.dinner,
+    required this.lunch,
+    required this.breakfast,
+    required this.snack,
 
   });
 
@@ -31,10 +37,13 @@ class Meal {
       warm: json['warm'] == 1 ? true : false,
       spicy: json['spicy'] == 1 ? true : false,
       dinner: json['dinner'] == 1 ? true : false,
+      lunch: json['lunch'] == 1 ? true : false,
+      breakfast: json['breakfast'] == 1 ? true : false,
+      snack: json['snack'] == 1 ? true : false,
     );
   }
   @override
   String toString() {
-    return 'Meal{id: $id, name: $name, description: $description, image: $image, calories: $calories, warm: $warm, spicy: $spicy, dinner: $dinner}';
+    return 'Meal{id: $id, name: $name, description: $description, image: $image, calories: $calories, warm: $warm, spicy: $spicy, dinner: $dinner, lunch: $lunch, breakfast: $breakfast, snack: $snack}';
   }
 }
