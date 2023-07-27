@@ -55,7 +55,7 @@ class SignUpState extends State<SignUpWidget> {
     );
 
     if (response.statusCode == 200) {
-      showCustomSnackBar(isError: false ,"welcome , you signed up successfully", title: "Hi $firstName");
+      showCustomSnackBar(isError: false ,"مرحبًا شكرًا لتسجيلك", title: "مرحبا");
       print("Success registration");
       await loginUser(email, password);
       return true;

@@ -211,7 +211,7 @@ class _StepperWidgetState extends State<StepperWidget> {
                           label: _initialHeightValue.toString(),
                           onChanged: (value) {
                             setState(() {
-                              _initialHeightValue = value;
+                              _initialHeightValue = value.round().toDouble();
                             });
                           }),
                       Text(_initialHeightValue.toString())
@@ -233,7 +233,7 @@ class _StepperWidgetState extends State<StepperWidget> {
                           label: _initialWeightValue.toString(),
                           onChanged: (value) {
                             setState(() {
-                              _initialWeightValue = value;
+                              _initialWeightValue = value.round().toDouble();
                             });
                           }),
                       Text(_initialWeightValue.toString())
@@ -272,8 +272,9 @@ class _StepperWidgetState extends State<StepperWidget> {
                           value: "1",
                           groupValue: _excercise,
                           onChanged: (val) {
-                            setState(() {
+                            setState(() async {
                               _excercise = val!;
+                              await _questionAndAnswer("1", _excercise);
                             });
                           }),
                       RadioListTile(
@@ -281,8 +282,9 @@ class _StepperWidgetState extends State<StepperWidget> {
                           value: "2",
                           groupValue: _excercise,
                           onChanged: (val) {
-                            setState(() {
+                            setState(() async {
                               _excercise = val!;
+                              await _questionAndAnswer("1", _excercise);
                             });
                           }),
                       RadioListTile(
@@ -291,8 +293,9 @@ class _StepperWidgetState extends State<StepperWidget> {
                               "3",
                           groupValue: _excercise,
                           onChanged: (val) {
-                            setState(() {
+                            setState(() async {
                               _excercise = val!;
+                              await _questionAndAnswer("1", _excercise);
                             });
                           }),
                       RadioListTile(
@@ -301,8 +304,9 @@ class _StepperWidgetState extends State<StepperWidget> {
                               "4",
                           groupValue: _excercise,
                           onChanged: (val) {
-                            setState(() {
+                            setState(() async {
                               _excercise = val!;
+                              await _questionAndAnswer("1", _excercise);
                             });
                           }),
                       RadioListTile(
@@ -310,8 +314,9 @@ class _StepperWidgetState extends State<StepperWidget> {
                           value: "5",
                           groupValue: _excercise,
                           onChanged: (val) {
-                            setState(() {
+                            setState(() async {
                               _excercise = val!;
+                              await _questionAndAnswer("1", _excercise);
                             });
                           }),
                     ],
@@ -342,7 +347,7 @@ class _StepperWidgetState extends State<StepperWidget> {
                   await _questionAndAnswer("5", _initialWeightValue.toString());
                 } else if (_index == 4) {
                   setState(() => _index++);
-                  await _questionAndAnswer("6", _selectedDate.year.toString());
+                  await _questionAndAnswer("22", _selectedDate.year.toString());
                 } else if (_index == 5) {
                   setState(() => _index++);
                   await _questionAndAnswer("1", _excercise);
