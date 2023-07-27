@@ -14,6 +14,7 @@ import '../../Models/MealWithRating.dart';
 import '../../components/app_column.dart';
 import '../../API/Methods.dart';
 import '../../base/show_custom_message.dart';
+import '../../Models/Intake.dart';
 
 class TopRatedFoodDetails extends StatefulWidget {
   final MealWithRating meal;
@@ -159,18 +160,22 @@ class _TopRatedFoodDetailsState extends State<TopRatedFoodDetails> {
                     height: 50,
                     fontSize: 20,
                   ),
-                  onTap: widget.meal.isConsumed ? null : () {
-                    showCustomSnackBar(title: "إضافة وجبة", "ثم إضافة الوجبة ${widget.meal.meal.name}");
-                    reportConsumedMeal(widget.meal.meal.id);
-                    setState(() {
-                      widget.meal.isConsumed = true;
-                    });
+                  onTap: widget.meal.isConsumed ? null : () async {
+                    Intake intake = await fetchIntake();
+                    var rem = intake.recommended - intake.consumed;
+                    print("Meal cal: ${widget.meal.meal.calories} || Remaining: ${rem}");
+                    if (widget.meal.meal.calories <= rem) {
+
+                      showCustomSnackBar(title: "إضافة وجبة", "ثم إضافة الوجبة ${widget.meal.meal.name}" ,isError: false);
+                      reportConsumedMeal(widget.meal.meal.id);
+                      setState(() {
+                        widget.meal.isConsumed = true;
+                      });
+                    } else {
+                      showCustomSnackBar(title: "عذرا", "لقد تجاوزت الحد المسموح به من الكالوري");
+                    }
                   },
                 ),
-
-
-
-
               ),
             ],
           ),
@@ -196,7 +201,7 @@ class _TopRatedFoodDetailsState extends State<TopRatedFoodDetails> {
             onPressed: () {
               rateMeal(widget.meal.meal.id, rating.toInt());
               Navigator.pop(context);
-              showCustomSnackBar(title: "تقييم","ثم تقييم الوجبة ب ${rating.toInt()} نجوم");
+              showCustomSnackBar(isError: false,title: "تقييم","ثم تقييم الوجبة ب ${rating.toInt()} نجوم");
             },
             child: AppBigText(
               text: "تقييم",

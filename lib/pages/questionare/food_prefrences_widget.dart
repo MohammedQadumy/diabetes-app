@@ -25,32 +25,40 @@ class _FoodPrefrencesWidgetState extends State<FoodPrefrencesWidget> {
     _index = 0;
   }
 
-
   void answerQuestion(String question,String answer){
     widget.onAnswered(question,answer);
+    if (_index < AppConstants.questions.length - 1) {
       setState(() {
-        _index<AppConstants.questions.length-1?_index++:_index=0;
+        _index++;
       });
-
+    }
   }
 
 
   @override
   Widget build(BuildContext context) {
-
     final currentQuestion = AppConstants.questions[_index];
 
     return Column(
       children: [
-        AppBigText(text:currentQuestion.text),
+        AppBigText(text:currentQuestion.text, size: 28,),
         ...currentQuestion.answers.map((answer){
-            return AppElevateButton(text:answer , onTap:(){
-               answerQuestion(currentQuestion.text,answer);
-               print(answer+_index.toString());
-            }
-            );
+          return AppElevateButton(text:answer , onTap:(){
+            answerQuestion(currentQuestion.id,answer);
+            print(answer+_index.toString());
+          }
+          );
         }),
+        if (_index == AppConstants.questions.length - 1)
+          ElevatedButton(
+            onPressed: () {
+              setState(() {
+                _index = 0;
+              });
+            },
+            child: AppBigText(text: "تعديل التفضيلات", size: 20,),
+          ),
       ],
-   );
+    );
   }
 }

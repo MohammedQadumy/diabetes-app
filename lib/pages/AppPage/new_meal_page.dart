@@ -33,6 +33,7 @@ class _NewMealPageState extends State<NewMealPage> {
   Meal? newMeal;
   bool mealWarm = false;
   bool mealSpicy = false;
+  bool dinner = false;
   ItemSearch? selectedIngredient;
 
   late List<dynamic> meals;
@@ -259,6 +260,15 @@ class _NewMealPageState extends State<NewMealPage> {
                   });
                 },
               ),
+              SwitchListTile(
+                title: const Text('هل الوجبة كعشاء؟'),
+                value: dinner,
+                onChanged: (bool value) {
+                  setState(() {
+                    dinner = value;
+                  });
+                },
+              ),
               GestureDetector(
                 child: Container(
                   child: AppButton(
@@ -279,6 +289,7 @@ class _NewMealPageState extends State<NewMealPage> {
                     calories: calories.toInt(),
                     warm: mealWarm,
                     spicy: mealSpicy,
+                     dinner: dinner,
                   );
                   int newMealId = await createMeal(newMeal!);
                   print(newMealId);

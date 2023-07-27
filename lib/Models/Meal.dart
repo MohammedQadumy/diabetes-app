@@ -7,6 +7,7 @@ class Meal {
   final int calories;
   final bool warm;
   final bool spicy;
+  final bool dinner;
 
   Meal({
     required this.id,
@@ -16,6 +17,8 @@ class Meal {
     required this.calories,
     required this.warm,
     required this.spicy,
+    required this.dinner,
+
   });
 
   factory Meal.fromJson(Map<String, dynamic> json) {
@@ -27,10 +30,11 @@ class Meal {
       calories: json['calories'],
       warm: json['warm'] == 1 ? true : false,
       spicy: json['spicy'] == 1 ? true : false,
+      dinner: json['dinner'] == 1 ? true : false,
     );
   }
   @override
   String toString() {
-    return 'Meal{id: $id, name: $name, description: $description, image: $image, calories: $calories, warm: $warm, spicy: $spicy}';
+    return 'Meal{id: $id, name: $name, description: $description, image: $image, calories: $calories, warm: $warm, spicy: $spicy, dinner: $dinner}';
   }
 }

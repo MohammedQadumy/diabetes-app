@@ -8,15 +8,17 @@ class AppTextField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
   final IconData icon ;
-   final bool obscureText;
+  final bool obscureText;
+  final FormFieldValidator<String>? validator;
 
   AppTextField({
-    super.key,
-     required this.controller,
-      this.hintText = "",
+    Key? key,
+    required this.controller,
+    this.hintText = "",
     required this.icon,
     required this.obscureText,
-  });
+    this.validator,
+  }) : super(key: key);
 
 
 
@@ -26,19 +28,19 @@ class AppTextField extends StatelessWidget {
       margin: EdgeInsets.only(left: Dimensions.height10,right: Dimensions.height10),
       padding: EdgeInsets.only(bottom: Dimensions.height5,top: Dimensions.height5),
       decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-                blurRadius: Dimensions.height10,
-                spreadRadius: Dimensions.height5,
-                offset: Offset(1,Dimensions.height10),
-                color: AppColors.nearlyWhite.withOpacity(0.2)
-            )
-          ],
+        boxShadow: [
+          BoxShadow(
+              blurRadius: Dimensions.height10,
+              spreadRadius: Dimensions.height5,
+              offset: Offset(1,Dimensions.height10),
+              color: AppColors.nearlyWhite.withOpacity(0.2)
+          )
+        ],
       ),
-      child: TextField(
+      child: TextFormField(
         obscureText: obscureText,
         controller: controller,
-        // obscureText: obscureText,
+        validator: validator,
         decoration: InputDecoration(
           prefixIcon: Icon(icon , color: AppColors.grey),
           enabledBorder:  OutlineInputBorder(
@@ -47,7 +49,7 @@ class AppTextField extends StatelessWidget {
           ),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.grey.shade400),
-           borderRadius: BorderRadius.circular(Dimensions.height20),
+            borderRadius: BorderRadius.circular(Dimensions.height20),
           ),
           fillColor: Colors.grey.shade200,
           filled: true,

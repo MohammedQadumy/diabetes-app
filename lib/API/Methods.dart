@@ -428,7 +428,7 @@ Future<int> createMeal(Meal meal) async {
   request.fields['snack'] = "1";
   request.fields['breakfast'] = "1";
   request.fields['lunch'] = "1";
-  request.fields['dinner'] = "1";
+  request.fields['dinner'] = meal.dinner ? "1" : "0";
   request.fields['warm'] = meal.warm ? "1" : "0";
   request.fields['hard'] = "1";
   request.fields['salty'] = "1";
@@ -645,3 +645,28 @@ Future<int> fetchBMI() async {
     throw Exception('Unexpected error occurred');
   }
 }
+
+
+
+
+Future<String> questionAndAnswer(String question , String answer) async {
+  final response = await http.post(
+    Uri.parse('${AppConstants.BASE_URL}/api/question/'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer ${AppConstants.TOKEN}',
+    },
+    body: jsonEncode(<String, String>{
+      'question': question,
+      'question_answer': answer
+    }),
+  );
+
+  if (response.statusCode == 200) {
+    return "Answer sent";
+  } else {
+    throw Exception('Answer failed to send');
+  }
+}
+
+
