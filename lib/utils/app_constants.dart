@@ -4,7 +4,7 @@ import '../Models/questions.dart';
 import '../Models/User.dart';
 class AppConstants {
   static  String APP_NAME = "DIABEAT";
-  static  String BASE_URL = "http://13.51.162.14:8000/";
+  static  String BASE_URL = "http://13.51.162.14:8000";
   static  String REGISTRATION_URI = "${BASE_URL}/api/register/";
   static  String LOGIN_URI = "/api/login/";
   static  String MEALS_URI = "/api/meals/";
