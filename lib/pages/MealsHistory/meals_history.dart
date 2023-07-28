@@ -60,14 +60,12 @@ class _MealsHistoryState extends State<MealsHistory> {
                     (BuildContext context, AsyncSnapshot<List<Meal>> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(
-                      // centers the CircularProgressIndicator
                       child: SizedBox(
-                        // constrains the size of CircularProgressIndicator
                         width: 50,
                         height: 50,
                         child: CircularProgressIndicator(),
                       ),
-                    ); // or your custom loader
+                    );
                   } else if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
                   } else {

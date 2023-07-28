@@ -257,7 +257,10 @@ class _MediterranesnDietViewState extends State<MediterranesnDietView> {
                             Center(
                               child: Column(
                                 children: [
-                                  AppBigText(text: noteText, size: 30,),
+                                  AppBigText(
+                                    text: noteText,
+                                    size: 30,
+                                  ),
                                   Container(
                                     padding: const EdgeInsets.all(16),
                                     decoration: BoxDecoration(
@@ -283,7 +286,6 @@ class _MediterranesnDietViewState extends State<MediterranesnDietView> {
                                         } else if (snapshot.hasData) {
                                           return Container(
                                             color: Color(0xFFDADEFF),
-
                                             child: Wrap(
                                               spacing: 8.0,
                                               runSpacing: 1.0,
@@ -291,22 +293,28 @@ class _MediterranesnDietViewState extends State<MediterranesnDietView> {
                                                 AppBigText(
                                                   text: "بروتين",
                                                   size: 25,
-
                                                 ),
                                                 AppBigText(
                                                   text: "${snapshot.data}",
                                                 ),
-
                                               ],
                                             ),
                                           );
-
                                         } else {
-                                          return Text(
-                                            "Error fetching data",
-                                            style: TextStyle(
-                                              color: Colors.red,
-                                              fontWeight: FontWeight.bold,
+                                          return Container(
+                                            color: Color(0xFFDADEFF),
+                                            child: Wrap(
+                                              spacing: 8.0,
+                                              runSpacing: 1.0,
+                                              children: [
+                                                AppBigText(
+                                                  text: "بروتين",
+                                                  size: 25,
+                                                ),
+                                                AppBigText(
+                                                  text: "0",
+                                                ),
+                                              ],
                                             ),
                                           );
                                         }
@@ -349,16 +357,24 @@ class _MediterranesnDietViewState extends State<MediterranesnDietView> {
                                                 AppBigText(
                                                   text: "${snapshot.data}",
                                                 ),
-
                                               ],
                                             ),
                                           );
                                         } else {
-                                          return Text(
-                                            "Error fetching data",
-                                            style: TextStyle(
-                                              color: Colors.red,
-                                              fontWeight: FontWeight.bold,
+                                          return Container(
+                                            color: Color(0xFFDADEFF),
+                                            child: Wrap(
+                                              spacing: 8.0,
+                                              runSpacing: 1.0,
+                                              children: [
+                                                AppBigText(
+                                                  text: "كربوهيدرات",
+                                                  size: 25,
+                                                ),
+                                                AppBigText(
+                                                  text: "0",
+                                                ),
+                                              ],
                                             ),
                                           );
                                         }
@@ -401,17 +417,24 @@ class _MediterranesnDietViewState extends State<MediterranesnDietView> {
                                                 AppBigText(
                                                   text: "${snapshot.data}",
                                                 ),
-
-
                                               ],
                                             ),
                                           );
                                         } else {
-                                          return Text(
-                                            "Error fetching data",
-                                            style: TextStyle(
-                                              color: Colors.red,
-                                              fontWeight: FontWeight.bold,
+                                          return Container(
+                                            color: Color(0xFFDADEFF),
+                                            child: Wrap(
+                                              spacing: 8.0,
+                                              runSpacing: 1.0,
+                                              children: [
+                                                AppBigText(
+                                                  text: "دهون",
+                                                  size: 25,
+                                                ),
+                                                AppBigText(
+                                                  text: "0",
+                                                ),
+                                              ],
                                             ),
                                           );
                                         }
