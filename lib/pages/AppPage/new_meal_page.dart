@@ -325,6 +325,7 @@ class _NewMealPageState extends State<NewMealPage> {
                      snack: snack,
                   );
                   int newMealId = await createMeal(newMeal!);
+                  await reportConsumedMeal(newMealId);
                   print(newMealId);
                   AddedIngredients.forEach((ingredient) async {
                     print('==============');
@@ -335,7 +336,7 @@ class _NewMealPageState extends State<NewMealPage> {
                     await postMealItem(newMealId, ingredient.id, double.parse(ingredient.portion));
 
                   });
-                  showCustomSnackBar("ثم إضافة الوجبة", title: "تم");
+                  showCustomSnackBar(isError: false,"ثم إضافة الوجبة", title: "تم");
                 },
               ),
 

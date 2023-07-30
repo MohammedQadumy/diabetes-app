@@ -295,6 +295,26 @@ Future<void> reportConsumedMeal(int mealId) async {
   }
 }
 
+Future<void> deleteConsumedMeal(int mealId) async {
+  final response = await http.post(
+    Uri.parse('${AppConstants.BASE_URL}/api/delete_from_history/'),
+    // Replace with your server URL
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer ${AppConstants.TOKEN}',
+      // Replace with user's token
+    },
+    body: jsonEncode(<String, String>{
+      'meal_id': mealId.toString(),
+    }),
+  );
+
+  if (response.statusCode == 200) {
+    print('Meal consumption reported successfully');
+  } else {
+    throw Exception('Failed to report meal consumption');
+  }
+}
 Future<List<Meal>> fetchConsumedMeals() async {
   final response =
   await http.get(

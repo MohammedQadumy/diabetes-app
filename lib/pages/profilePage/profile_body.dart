@@ -128,7 +128,7 @@ class _ProfileBodyState extends State<ProfileBody> {
                         } else {
                           Navigator.pop(context);
                           showCustomSnackBar(
-                              "UpdatedTo: ${updates.values.toString().substring(1, updates.values.toString().length - 1)}",
+                              isError: false,"UpdatedTo: ${updates.values.toString().substring(1, updates.values.toString().length - 1)}",
                               title: "Sucess");
                         }
                       },

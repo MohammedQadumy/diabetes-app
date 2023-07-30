@@ -83,19 +83,19 @@ class SignUpState extends State<SignUpWidget> {
     String password = passwordController.text.trim();
 
     if (firstName.isEmpty) {
-      showCustomSnackBar("type your name", title: "Name");
+      showCustomSnackBar("الرجاء ادخال الاسم الأول", title: "خطأ");
       return false;
     } else if (lastname.isEmpty) {
-      showCustomSnackBar("type your last name", title: "Name");
+      showCustomSnackBar("الرجاء ادخال الاسم الثاني", title: "خطأ");
       return false;
     } else if (username.isEmpty) {
-      showCustomSnackBar("type your username", title: "Name");
+      showCustomSnackBar("الرجاء ادخال اسم المستخدم", title: "خطأ");
       return false;
     } else if (!GetUtils.isEmail(email) || email.isEmpty) {
-      showCustomSnackBar("type your email", title: "Name");
+      showCustomSnackBar("الرجاء ادخال البريد الالكتروني", title: "خطأ");
       return false;
     } else if (password.isEmpty || password.length < 8) {
-      showCustomSnackBar("type your password", title: "Name");
+      showCustomSnackBar("الرجاء ادخال رقم المرور", title: "خطأ");
       return false;
     } else {
       return true;

@@ -103,7 +103,7 @@ class _TopRatedFoodDetailsState extends State<TopRatedFoodDetails> {
                               children: snapshot.data!.map((item) =>
                                   ListTile(
                                     title: Text(item.itemName),
-                                    trailing: Text('${item.weight.toString()}غم'),
+                                    trailing: Text('${(item.weight/5).toString()}غم'),
                                   )
                               ).toList(),
                             );

@@ -58,7 +58,7 @@ void showCustomSnackBar(String message,
     colorText: Colors.white,
     borderRadius: 10,
     margin: EdgeInsets.all(10),
-    duration: Duration(seconds: 4),
+    duration: Duration(seconds: 1),
     forwardAnimationCurve: Curves.fastLinearToSlowEaseIn,
   );
 }

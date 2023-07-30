@@ -27,7 +27,7 @@ class _AppDatePickerState extends State<AppDatePicker> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        AppBigText(text: "Choose Your birthday"),
+        AppBigText(text: "اختر يوم ميلادك", size: 30,),
         TextField(
           controller: dateController,
           decoration: const InputDecoration(
@@ -38,7 +38,7 @@ class _AppDatePickerState extends State<AppDatePicker> {
           onTap: () async {
             DateTime? pickedDate = await showDatePicker(
               context: context,
-              initialDate: DateTime(2010),
+              initialDate: DateTime(2003),
               firstDate: DateTime(1970),
               lastDate: DateTime.now(),
             );

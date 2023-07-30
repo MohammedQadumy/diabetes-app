@@ -26,6 +26,10 @@ class _FoodPrefrencesWidgetState extends State<FoodPrefrencesWidget> {
   }
 
   void answerQuestion(String question,String answer){
+    if(answer == 'سهلة المضغ')
+      answer = "easy to chew";
+    else if(answer == 'صعبة المضغ')
+      answer  = "hard";
     widget.onAnswered(question,answer);
     if (_index < AppConstants.questions.length - 1) {
       setState(() {
